@@ -30,23 +30,23 @@ class Screen1Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnScreen2.setOnClickListener {
-            Log.d("TAG", "Go to screen 2 pressed")
-            val nametosend = binding.etName.text.toString()
-            val hourlyRate = binding.etHourlyRate.text.toString().toFloatOrNull()
-
-            if(hourlyRate == null) {
-                binding.etHourlyRate.error = "Enter valid data"
-                return@setOnClickListener
-            }
-            val action = Screen1FragmentDirections.actionScreen1FragmentToScreen2Fragment()
-            findNavController().navigate(action)
-        }
-        binding.btnScreen3.setOnClickListener {
-            Log.d("TAG", "Go to screen 3 pressed")
-            val action = Screen1FragmentDirections.actionScreen1FragmentToScreen3Fragment()
-            findNavController().navigate(action)
-        }
+//        binding.btnScreen2.setOnClickListener {
+//            Log.d("TAG", "Go to screen 2 pressed")
+//            val nametosend = binding.etName.text.toString()
+//            val hourlyRate = binding.etHourlyRate.text.toString().toFloatOrNull()
+//
+//            if(hourlyRate == null) {
+//                binding.etHourlyRate.error = "Enter valid data"
+//                return@setOnClickListener
+//            }
+//            val action = Screen1FragmentDirections.actionScreen1FragmentToScreen2Fragment()
+//            findNavController().navigate(action)
+//        }
+//        binding.btnScreen3.setOnClickListener {
+//            Log.d("TAG", "Go to screen 3 pressed")
+//            val action = Screen1FragmentDirections.actionScreen1FragmentToScreen3Fragment()
+//            findNavController().navigate(action)
+//        }
     }
 
     override fun onDestroyView() {

@@ -4,53 +4,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF9C4"
+    android:background="@color/background"
     tools:context=".fragments.Screen1Fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="28sp"
-        android:text="Screen 1 (Fragment)" />
+        android:layout_height="200dp"
+        android:src="@drawable/logo_main_bg"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical"
+        android:layout_margin="30dp">
+<!--        todo change font style to bukhari script-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main"
+            android:text="Login"
+            android:textSize="40sp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/box_border"
+            android:backgroundTint="@color/white"
+            android:padding="20dp"
+            android:layout_marginBottom="20dp"
+            android:hint="Enter Username"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/box_border"
+            android:backgroundTint="@color/white"
+            android:padding="20dp"
+            android:layout_marginBottom="20dp"
+            android:hint="Enter Password"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider_main_bg"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main"
+            android:text="OR"
+            android:textSize="10sp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            />
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main"
+            android:text="Sign up"
+            android:textSize="20sp"
+            />
 
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter employee name"
-        android:minHeight="48dp" />
 
-    <EditText
-        android:id="@+id/etHourlyRate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter employee's hourly rate"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Is Manager?"/>
-    <Switch
-        android:id="@+id/swIsManager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp" />
-    <Button
-        android:id="@+id/btnScreen2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#8E24AA"
-        android:textColor="@color/white"
-        android:text="Go to screen 2"/>
-    <Button
-        android:id="@+id/btnScreen3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FB8C00"
-        android:textColor="@color/white"
-        android:text="Go to screen 3"/>
+    </LinearLayout>
 
 </LinearLayout>
