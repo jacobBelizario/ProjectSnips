@@ -7,32 +7,20 @@
 
     <fragment
         android:id="@+id/screen1Fragment"
-        android:name="com.example.projectSnips.fragments.Screen1Fragment"
+        android:name="com.example.projectSnips.fragments.LoginFragment"
         android:label="fragment_screen1"
-        tools:layout="@layout/fragment_screen1" >
-        <action
-            android:id="@+id/action_screen1Fragment_to_screen3Fragment"
-            app:destination="@id/screen3Fragment" />
+        tools:layout="@layout/login_screen" >
         <action
             android:id="@+id/action_screen1Fragment_to_screen2Fragment"
             app:destination="@id/screen2Fragment" />
     </fragment>
     <fragment
         android:id="@+id/screen2Fragment"
-        android:name="com.example.projectSnips.fragments.Screen2Fragment"
+        android:name="com.example.projectSnips.fragments.SignupFragment"
         android:label="fragment_screen2"
-        tools:layout="@layout/fragment_screen2" >
+        tools:layout="@layout/signup_screen" >
         <action
-            android:id="@+id/action_screen2Fragment_to_screen3Fragment"
-            app:destination="@id/screen3Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/screen3Fragment"
-        android:name="com.example.projectSnips.fragments.Screen3Fragment"
-        android:label="fragment_screen3"
-        tools:layout="@layout/fragment_screen3" >
-        <action
-            android:id="@+id/action_screen3Fragment_to_screen2Fragment"
-            app:destination="@id/screen2Fragment" />
+            android:id="@+id/action_screen2Fragment_to_screen1Fragment"
+            app:destination="@id/screen1Fragment" />
     </fragment>
 </navigation>
