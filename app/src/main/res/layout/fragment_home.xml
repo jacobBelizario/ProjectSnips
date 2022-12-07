@@ -11,8 +11,8 @@
         android:name="com.example.projectSnips.fragments.HeaderFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_header"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_header" />
 
     <androidx.fragment.app.FragmentContainerView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/fragment_footer"
         app:layout_constraintStart_toStartOf="@+id/fragment_header"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_header"
         tools:layout="@layout/fragment_body" />
 
     <androidx.fragment.app.FragmentContainerView
