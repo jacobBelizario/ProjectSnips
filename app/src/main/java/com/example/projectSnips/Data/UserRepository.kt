@@ -2,9 +2,9 @@ package com.example.projectSnips.Data
 
 import android.content.Context
 import android.util.Log
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.util.HashMap
 
 class UserRepository (private val context: Context) {
     private val TAG = this.toString()
@@ -17,6 +17,7 @@ class UserRepository (private val context: Context) {
     private var editor = sharedPreference.edit()
 
     fun addUserToDB(newUser: User) {
+        var success = false
         try {
             val data: MutableMap<String, Any> = HashMap()
 
@@ -24,9 +25,6 @@ class UserRepository (private val context: Context) {
             data[FIELD_PASSWORD] = newUser.password;
 
             db.collection(COLLECTION_NAME).add(data).addOnSuccessListener { docRef ->
-                Log.d("ADD", "addUserToDB: Document added with ID ${docRef.id}")
-                editor.putString("USER_DOC_ID", docRef.id)
-                editor.commit()
 
             }.addOnFailureListener {
                 Log.e(TAG, "addUserToDB: ${it}")
@@ -34,6 +32,30 @@ class UserRepository (private val context: Context) {
 
         } catch (ex: Exception) {
             Log.e(TAG, "addUserToDB: ${ex.toString()}")
+        }
+
+    }
+
+
+    fun searchUserWithEmail(email : String){
+
+        try{
+            db.collection(COLLECTION_NAME)
+                .whereEqualTo(FIELD_USER_EMAIL, email)
+                .addSnapshotListener(EventListener { snapshot, error ->
+                    if (error != null){
+                        Log.e(TAG, "searchUserWithEmail: Listening to collection documents FAILED ${error}")
+                        return@EventListener
+                    }
+                    if (snapshot != null){
+
+                    }else{
+                        Log.e(TAG, "searchUserWithEmail: No Documents received from collection")
+                    }
+                })
+
+        }catch(ex: Exception){
+            Log.e(TAG, "${ex}")
         }
     }
 }

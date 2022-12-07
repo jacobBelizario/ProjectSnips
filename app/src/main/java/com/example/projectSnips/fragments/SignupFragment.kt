@@ -1,11 +1,13 @@
 package com.example.projectSnips.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projectSnips.Data.User
@@ -13,10 +15,11 @@ import com.example.projectSnips.Data.UserRepository
 import com.example.projectSnips.databinding.SignupScreenBinding
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import javax.sql.DataSource
 
 
 class SignupFragment : Fragment() {
-
+    lateinit var sharedPrefs : SharedPreferences
     val TAG:String = "SCREEN2-FRAGMENT"
     //for binding
     private var _binding: SignupScreenBinding? = null
@@ -38,6 +41,9 @@ class SignupFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
+
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
         userRepository = UserRepository(this.requireContext())
@@ -87,10 +93,14 @@ class SignupFragment : Fragment() {
                 this.requireActivity()
             ) { task ->
                 if (task.isSuccessful) {
-                    userRepository.addUserToDB(User(email = email, password = password, photoList = arrayListOf()))
+                    sharedPrefs = this.requireActivity().getSharedPreferences("com_example_projectSnips",
+                        AppCompatActivity.MODE_PRIVATE
+                    )
+                   userRepository.addUserToDB(User(email = email, password = password, photoList = arrayListOf()))
+                    writeToPrefs("EMAIL",email)
+                    writeToPrefs("PASSWORD",password)
                     val action = SignupFragmentDirections.actionSignupFragmentToHomeFragment()
                     findNavController().navigate(action)
-
                 } else {
                     Log.e(
                         "TEST_SIGNUP",
@@ -99,5 +109,13 @@ class SignupFragment : Fragment() {
                     )
                 }
             }
+    }
+
+    fun writeToPrefs(type:String,value:String){
+        var keyName = "KEY_LOGGEDIN_${type}"
+        with(sharedPrefs.edit()){
+            putString(keyName, value)
+            apply()
+        }
     }
 }
