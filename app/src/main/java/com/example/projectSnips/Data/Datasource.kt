@@ -17,5 +17,5 @@ class Datasource {
             }
         }
     }
-    var user = ""
+    var heading = "ALL SNIPS"
 }
