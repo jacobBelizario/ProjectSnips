@@ -11,11 +11,19 @@
         android:name="com.example.projectSnips.fragments.HeaderFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="681dp"
         app:layout_constraintBottom_toBottomOf="@id/fragment_header"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout="@layout/fragment_header" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_body"
+        android:name="com.example.projectSnips.fragments.BodyFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_footer"
+        app:layout_constraintStart_toStartOf="@+id/fragment_header"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_body" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_footer"
