@@ -28,24 +28,14 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        binding.btnScreen2.setOnClickListener {
-//            Log.d("TAG", "Go to screen 2 pressed")
-//            val nametosend = binding.etName.text.toString()
-//            val hourlyRate = binding.etHourlyRate.text.toString().toFloatOrNull()
-//
-//            if(hourlyRate == null) {
-//                binding.etHourlyRate.error = "Enter valid data"
-//                return@setOnClickListener
-//            }
-//            val action = Screen1FragmentDirections.actionScreen1FragmentToScreen2Fragment()
-//            findNavController().navigate(action)
-//        }
-//        binding.btnScreen3.setOnClickListener {
-//            Log.d("TAG", "Go to screen 3 pressed")
-//            val action = Screen1FragmentDirections.actionScreen1FragmentToScreen3Fragment()
-//            findNavController().navigate(action)
-//        }
+        binding.btnLogin.setOnClickListener {
+            if(binding.etUsername.text.toString().isEmpty()){
+                binding.etUsername.error = "Please enter a valid email"
+            }
+            if(binding.etPassword.text.toString().isEmpty()){
+                binding.etPassword.error = "Please enter a password"
+            }
+        }
         binding.btnSignup.setOnClickListener {
             val action = LoginFragmentDirections.actionScreen1FragmentToScreen2Fragment()
             findNavController().navigate(action)

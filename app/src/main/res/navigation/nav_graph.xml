@@ -3,24 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/screen1Fragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/screen1Fragment"
+        android:id="@+id/loginFragment"
         android:name="com.example.projectSnips.fragments.LoginFragment"
         android:label="fragment_screen1"
         tools:layout="@layout/login_screen" >
         <action
             android:id="@+id/action_screen1Fragment_to_screen2Fragment"
-            app:destination="@id/screen2Fragment" />
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/screen2Fragment"
+        android:id="@+id/signupFragment"
         android:name="com.example.projectSnips.fragments.SignupFragment"
         android:label="fragment_screen2"
         tools:layout="@layout/signup_screen" >
         <action
             android:id="@+id/action_screen2Fragment_to_screen1Fragment"
-            app:destination="@id/screen1Fragment" />
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_signupFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.projectSnips.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_screen2Fragment"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_screen1Fragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.projectSnips.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>
