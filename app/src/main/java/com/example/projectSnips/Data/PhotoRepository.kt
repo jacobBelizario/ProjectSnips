@@ -55,6 +55,7 @@ class PhotoRepository() :ViewModel() {
                                 }.invokeOnCompletion {
                                     BodyFragment().updateUI(snipList)
                                     snipDisplays.postValue(snipList)
+                                    Log.d("liveData", snipDisplays.value.toString())
                                 }
                             }
                         }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,12 +31,12 @@ import com.google.firebase.storage.ktx.component3
 import com.google.firebase.storage.ktx.storage
 import java.io.File
 
-class BodyFragment : Fragment(){
+class BodyFragment : Fragment(), LifecycleOwner{
 
     lateinit var storage:FirebaseStorage
     private var storageLocation: String = "public/"
     lateinit var snipsList : ArrayList<Bitmap>
-    var adapter: SnipAdapter? = null
+    var adapterSnips: SnipAdapter? = null
 
     private var _binding: FragmentBodyBinding? = null
     private val binding get() = _binding!!
@@ -51,15 +52,19 @@ class BodyFragment : Fragment(){
 
     override fun onResume() {
         super.onResume()
+        Log.d("onResume", PhotoRepository().getLiveData().value.toString())
         PhotoRepository().snipDisplays.observe(this.viewLifecycleOwner, Observer {
+            Log.d("onResume", "live")
             if (it != null){
                 for(snip in it){
                     snipsList.add(snip)
-                    adapter?.notifyDataSetChanged()
                 }
+                adapterSnips?.notifyDataSetChanged()
             }
 
-        })
+        }).apply {
+            this@BodyFragment
+        }
         Log.d("onResume", snipsList.toString())
     }
 
@@ -71,10 +76,10 @@ class BodyFragment : Fragment(){
                     //snipsList.clear()
                     //binding.snipDisplay.adapter = SnipAdapter(requireContext(), snips)
                     snipsList = snips
-                    Log.d("updateUI", adapter.toString())
+                    Log.d("updateUI", adapterSnips.toString())
                     //adapter = SnipAdapter(requireContext(), snips)
                     //binding.snipDisplay.adapter = adapter
-                    adapter?.notifyDataSetChanged()
+                    adapterSnips?.notifyDataSetChanged()
 
 
           //  }
@@ -105,13 +110,13 @@ class BodyFragment : Fragment(){
 
         super.onViewCreated(view, savedInstanceState)
 
-        snipsList = ArrayList()
 
-        adapter = SnipAdapter(view.context, snipsList)
-        Log.d("onViewCreated", adapter.toString())
+
+        adapterSnips = SnipAdapter(view.context, snipsList)
+        Log.d("onViewCreated", adapterSnips.toString())
         binding.snipDisplay.setHasFixedSize(true)
-        binding.snipDisplay.layoutManager = LinearLayoutManager(view.context)
-        binding.snipDisplay.adapter = adapter
+        binding.snipDisplay.layoutManager = LinearLayoutManager(activity)
+        binding.snipDisplay.adapter = adapterSnips
 
         PhotoRepository().getSnipsFrom("/public")
 

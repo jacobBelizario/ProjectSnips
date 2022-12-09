@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.net.toFile
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.RecyclerView
@@ -67,6 +68,7 @@ class SnipAdapter(private val context: Context,
 
     //identifies number of items
     override fun getItemCount(): Int {
+        Log.d("onItemCount", "$dataSet")
         return dataSet.size
     }
 }
