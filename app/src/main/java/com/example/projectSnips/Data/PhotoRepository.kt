@@ -19,11 +19,10 @@ import kotlinx.coroutines.withContext
 import java.net.URL
 import java.net.URLConnection
 
-class PhotoRepository() :ViewModel() {
+class PhotoRepository(val snipDisplays: MutableLiveData<ArrayList<Bitmap>>) :ViewModel() {
     val storage = Firebase.storage
     var snipList = arrayListOf<Bitmap>()
-    val snipDisplays: MutableLiveData<ArrayList<Bitmap>> by lazy {
-        MutableLiveData<ArrayList<Bitmap>>() }
+
 
     suspend fun convertToBitmap(url: String ) : Bitmap{
 
@@ -36,6 +35,7 @@ class PhotoRepository() :ViewModel() {
     }
 
     fun getLiveData(): MutableLiveData<ArrayList<Bitmap>>{
+        Log.d("getLiveData", snipDisplays.value.toString())
         return snipDisplays
     }
 
@@ -52,10 +52,13 @@ class PhotoRepository() :ViewModel() {
                             ref.downloadUrl.addOnSuccessListener {url ->
                                 viewModelScope.launch(Dispatchers.IO) {
                                     snipList.add(convertToBitmap(url.toString()))
+                                    return@launch
                                 }.invokeOnCompletion {
                                     BodyFragment().updateUI(snipList)
                                     snipDisplays.postValue(snipList)
+                                    //BodyFragment().updateUI(snipDisplays)
                                     Log.d("liveData", snipDisplays.value.toString())
+                                    return@invokeOnCompletion
                                 }
                             }
                         }

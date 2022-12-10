@@ -21,18 +21,26 @@ import java.net.URL
 
 class SnipAdapter(private val context: Context,
                   private val dataSet: ArrayList<Bitmap>
+                  //private val dataSet: ArrayList<Int>
 ) : RecyclerView.Adapter<SnipAdapter.SnipViewHolder>() {
 
     class SnipViewHolder(var binding: SnipItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(currentSnip: Bitmap) {
+        fun bind(
+            currentSnip: Bitmap
+            //currentSnip: Int
+        ) {
             //associate individual view and data
             Log.d("bind", "here")
 
                 //Log.d("bind", "$it")
                 //viewModelScope.launch {  }//remake thread & repository
                 //try {
+
+
                     binding.snipImageview.setImageBitmap(currentSnip)
+                    //binding.snipImageview.setImageResource(currentSnip)
+
                 //}
                 //catch (ex: Exception){
                 //    Log.e("bind", "$ex")

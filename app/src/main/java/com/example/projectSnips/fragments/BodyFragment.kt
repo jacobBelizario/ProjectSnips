@@ -36,7 +36,13 @@ class BodyFragment : Fragment(), LifecycleOwner{
     lateinit var storage:FirebaseStorage
     private var storageLocation: String = "public/"
     lateinit var snipsList : ArrayList<Bitmap>
+    lateinit var  sl : ArrayList<Int>
     var adapterSnips: SnipAdapter? = null
+
+    val snipDisplays: MutableLiveData<ArrayList<Bitmap>> by lazy {
+        MutableLiveData<ArrayList<Bitmap>>() }
+
+    var photoRepository = PhotoRepository(snipDisplays)
 
     private var _binding: FragmentBodyBinding? = null
     private val binding get() = _binding!!
@@ -46,14 +52,18 @@ class BodyFragment : Fragment(), LifecycleOwner{
         super.onCreate(savedInstanceState)
 
         snipsList = ArrayList()
+        sl = ArrayList()
+        sl.add(R.drawable.add_btn)
+        sl.add(R.drawable.add_btn)
+        sl.add(R.drawable.add_btn)
 
         Log.d("onCreate", snipsList.toString())
         }
 
     override fun onResume() {
         super.onResume()
-        Log.d("onResume", PhotoRepository().getLiveData().value.toString())
-        PhotoRepository().snipDisplays.observe(this.viewLifecycleOwner, Observer {
+        Log.d("onResume", photoRepository.getLiveData().value.toString())
+        photoRepository.snipDisplays.observe(this.viewLifecycleOwner, Observer {
             Log.d("onResume", "live")
             if (it != null){
                 for(snip in it){
@@ -76,6 +86,8 @@ class BodyFragment : Fragment(), LifecycleOwner{
                     //snipsList.clear()
                     //binding.snipDisplay.adapter = SnipAdapter(requireContext(), snips)
                     snipsList = snips
+                    Log.d("updateUI", snips.toString())
+                    Log.d("updateUI", snipsList.toString())
                     Log.d("updateUI", adapterSnips.toString())
                     //adapter = SnipAdapter(requireContext(), snips)
                     //binding.snipDisplay.adapter = adapter
@@ -113,12 +125,13 @@ class BodyFragment : Fragment(), LifecycleOwner{
 
 
         adapterSnips = SnipAdapter(view.context, snipsList)
+        //adapterSnips = SnipAdapter(view.context, sl)
         Log.d("onViewCreated", adapterSnips.toString())
         binding.snipDisplay.setHasFixedSize(true)
-        binding.snipDisplay.layoutManager = LinearLayoutManager(activity)
+        binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
         binding.snipDisplay.adapter = adapterSnips
 
-        PhotoRepository().getSnipsFrom("/public")
+        photoRepository.getSnipsFrom("/public")
 
 
 
