@@ -17,14 +17,14 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_body"
-        android:name="com.example.projectSnips.fragments.BodyFragment"
-        app:defaultNavHost="true"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintStart_toStartOf="@+id/fragment_header"
         app:layout_constraintTop_toBottomOf="@id/fragment_header"
         tools:layout="@layout/fragment_body"
+        app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
