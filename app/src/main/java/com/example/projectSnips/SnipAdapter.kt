@@ -30,37 +30,18 @@ class SnipAdapter(private val context: Context,
 
         fun bind(
             currentSnip: Photos
-            //currentSnip: Int
         ) {
-            //associate individual view and data
+
             Log.d("bind", "here")
 
-                //Log.d("bind", "$it")
-                //viewModelScope.launch {  }//remake thread & repository
-                //try {
-
-
                     binding.tvOwner.text = currentSnip.owner
+                    binding.tvCaption.text = currentSnip.caption
                     Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
-                    //binding.snipImageview.setImageResource(currentSnip)
 
-                //}
-                //catch (ex: Exception){
-                //    Log.e("bind", "$ex")
-                //}
-
-                //binding.snipImageview.setImageURI(it)
-
-
-            //use this approach to use the object and perform the data here in the bind() function
             itemView.setOnClickListener {
-//                Log.e("FruitViewHolder", "bind: ${currentFruit.title} selected", )
+
             }
 
-            //use this approach to send the object to MainActivity and perform the operation there
-            //           itemView.setOnClickListener {
-            //               clickListener.onSnipClicked(currentSnip)
-            //          }
         }
     }
 

@@ -18,19 +18,26 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_body"
         android:name="com.example.projectSnips.fragments.BodyFragment"
+        app:defaultNavHost="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_footer"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintStart_toStartOf="@+id/fragment_header"
         app:layout_constraintTop_toBottomOf="@id/fragment_header"
-        tools:layout="@layout/fragment_body" />
+        tools:layout="@layout/fragment_body"
+        app:navGraph="@navigation/nav_graph"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_footer"
-        android:name="com.example.projectSnips.fragments.FooterFragment"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout="@layout/fragment_footer" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/background"
+
+        app:itemTextColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu_options"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

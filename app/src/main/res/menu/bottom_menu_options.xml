@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/screen1Fragment"
+        android:title="All Snips"
+        android:icon="@drawable/ic_home"
+        >
+    </item>
+
+    <item
+        android:id="@+id/screen3"
+        android:title="Take a snip"
+        android:icon="@drawable/ic_add_photo"
+        >
+    </item>
+    <item
+        android:id="@+id/screen2Fragment"
+        android:icon="@drawable/ic_personal"
+        android:title="My Snips">
+    </item>
+</menu>
