@@ -1,7 +1,5 @@
 package com.example.projectSnips.Data
 
-import javax.sql.DataSource
-
 class Datasource {
     private constructor() {}
     companion object {
@@ -19,4 +17,6 @@ class Datasource {
     }
     var heading = "ALL SNIPS"
     var datalist:ArrayList<Photos> = arrayListOf()
+
+    var loggedInUser:User = User("","","", arrayListOf())
 }

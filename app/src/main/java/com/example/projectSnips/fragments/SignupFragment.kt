@@ -15,7 +15,6 @@ import com.example.projectSnips.Data.UserRepository
 import com.example.projectSnips.databinding.SignupScreenBinding
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import javax.sql.DataSource
 
 
 class SignupFragment : Fragment() {
@@ -99,6 +98,8 @@ class SignupFragment : Fragment() {
                    userRepository.addUserToDB(User(email = email, password = password, photoList = arrayListOf()))
                     writeToPrefs("EMAIL",email)
                     writeToPrefs("PASSWORD",password)
+
+                    //get that user and store the data in the singleton
                     val action = SignupFragmentDirections.actionSignupFragmentToHomeFragment()
                     findNavController().navigate(action)
                 } else {

@@ -101,6 +101,7 @@ class LoginFragment : Fragment() {
                  userRepository.searchUserWithEmail(email)
                     writeToPrefs("EMAIL",email)
                     writeToPrefs("PASSWORD",password)
+
                     val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                     findNavController().navigate(action)
 

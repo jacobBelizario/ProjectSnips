@@ -1,37 +1,18 @@
 package com.example.projectSnips.fragments
 
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
-
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.adapter.FragmentViewHolder
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
-import com.example.projectSnips.R
 import com.example.projectSnips.SnipAdapter
 import com.example.projectSnips.databinding.FragmentBodyBinding
-import com.example.projectSnips.databinding.LoginScreenBinding
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.component1
-import com.google.firebase.storage.ktx.component2
-import com.google.firebase.storage.ktx.component3
-import com.google.firebase.storage.ktx.storage
-import io.grpc.Context
-import java.io.File
 
 class BodyFragment : Fragment(), LifecycleOwner{
 
@@ -50,7 +31,6 @@ class BodyFragment : Fragment(), LifecycleOwner{
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
                 adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist) }
-                Log.d("ISTHISIT","${Datasource.getInstance().datalist}")
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
                 binding.snipDisplay.adapter = adapterSnips

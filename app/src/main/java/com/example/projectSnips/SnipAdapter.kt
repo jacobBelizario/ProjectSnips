@@ -1,24 +1,13 @@
 package com.example.projectSnips
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.net.toFile
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.SnipItemBinding
-import com.google.firebase.storage.StorageReference
-import java.net.URL
 
 
 class SnipAdapter(private val context: Context,
@@ -39,8 +28,10 @@ class SnipAdapter(private val context: Context,
                     Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
 
             itemView.setOnClickListener {
-
+                //dialog
             }
+
+
 
         }
     }

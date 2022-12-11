@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
 //        view?.findViewById<BottomNavigationView>(binding.bottomNavigationView.id)
 //            ?.setupWithNavController(navController)
 
-
+        val navHostFragment = parentFragmentManager
     }
 
 

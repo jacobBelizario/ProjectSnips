@@ -2,19 +2,13 @@ package com.example.projectSnips.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import com.example.projectSnips.Data.Datasource
-import com.example.projectSnips.Data.UserRepository
-import com.example.projectSnips.R
 import com.example.projectSnips.databinding.FragmentHeaderBinding
-import com.example.projectSnips.databinding.LoginScreenBinding
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 
@@ -51,6 +45,7 @@ class HeaderFragment : Fragment() {
 //        }
         binding.tvHeaderHeading.text = Datasource.getInstance().heading
         binding.tvUser.text = sharedPrefs.getString("KEY_LOGGEDIN_EMAIL","")
+
 
     }
 
