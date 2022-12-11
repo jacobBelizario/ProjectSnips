@@ -18,4 +18,5 @@ class Datasource {
         }
     }
     var heading = "ALL SNIPS"
+    var datalist:ArrayList<Photos> = arrayListOf()
 }

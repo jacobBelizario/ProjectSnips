@@ -6,15 +6,17 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="TOP TEXT"/>
         <ImageView
-            android:id="@+id/snip_imageview"
+            android:id="@+id/iv_snip"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
         <TextView
+            android:id="@+id/tv_owner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BOTTOM TEXT"/>

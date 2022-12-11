@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.BodyFragment"
+    android:id="@+id/fl_body"
     >
-
-
-
+    <ProgressBar
+        android:id="@+id/pb_spinner"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:indeterminateTint="@color/main"
+        android:layout_height="match_parent"/>
     <androidx.recyclerview.widget.RecyclerView
-
         android:id="@+id/snip_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
 </FrameLayout>

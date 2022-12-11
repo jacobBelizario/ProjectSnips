@@ -14,20 +14,22 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.SnipItemBinding
 import com.google.firebase.storage.StorageReference
 import java.net.URL
 
 
 class SnipAdapter(private val context: Context,
-                  private val dataSet: ArrayList<Bitmap>
+                  private val dataSet: ArrayList<Photos>
                   //private val dataSet: ArrayList<Int>
 ) : RecyclerView.Adapter<SnipAdapter.SnipViewHolder>() {
 
     class SnipViewHolder(var binding: SnipItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            currentSnip: Bitmap
+            currentSnip: Photos
             //currentSnip: Int
         ) {
             //associate individual view and data
@@ -38,7 +40,8 @@ class SnipAdapter(private val context: Context,
                 //try {
 
 
-                    binding.snipImageview.setImageBitmap(currentSnip)
+                    binding.tvOwner.text = currentSnip.owner
+                    Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
                     //binding.snipImageview.setImageResource(currentSnip)
 
                 //}
