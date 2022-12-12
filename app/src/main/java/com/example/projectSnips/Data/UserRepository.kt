@@ -26,6 +26,9 @@ class UserRepository (private val context: Context) {
 
             db.collection(COLLECTION_NAME).add(data).addOnSuccessListener { docRef ->
 
+                //
+                editor.putString("USER_REFERENCE", docRef.toString()).apply()
+
             }.addOnFailureListener {
                 Log.e(TAG, "addUserToDB: ${it}")
             }

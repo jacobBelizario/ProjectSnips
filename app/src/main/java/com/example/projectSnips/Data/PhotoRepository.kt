@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class PhotoRepository(val context: Context) :ViewModel() {
@@ -16,7 +17,9 @@ class PhotoRepository(val context: Context) :ViewModel() {
         //clear datasource whenever u run this function
         Datasource.getInstance().datalist = arrayListOf()
         //
-        db.collection(COLLECTION_NAME).get()
+        db.collection(COLLECTION_NAME)
+            .whereEqualTo("visibility", "public")
+            .get()
             .addOnSuccessListener { documents ->
             for(document in documents) {
                 var snip = document.toObject(Photos::class.java)
@@ -28,11 +31,13 @@ class PhotoRepository(val context: Context) :ViewModel() {
         }
     }
 
-    fun getPersonalSnips(email:String) {
+    fun getPersonalSnips(owner: String) {
         //clear datasource whenever u run this function
         Datasource.getInstance().datalist = arrayListOf()
         //
-        db.collection(COLLECTION_NAME).get()
+        db.collection(COLLECTION_NAME)
+            .whereEqualTo("owner", owner)
+            .get()
             .addOnSuccessListener { documents ->
                 for(document in documents) {
                     var snip = document.toObject(Photos::class.java)

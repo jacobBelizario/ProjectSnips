@@ -1,6 +1,7 @@
 package com.example.projectSnips.fragments
 
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,10 +12,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
+import com.example.projectSnips.Data.Photos
+import com.example.projectSnips.OnSnipClickListener
+import com.example.projectSnips.R
 import com.example.projectSnips.SnipAdapter
 import com.example.projectSnips.databinding.FragmentBodyBinding
 
-class BodyFragment : Fragment(), LifecycleOwner{
+class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
     lateinit var photoRepository: PhotoRepository
     var adapterSnips: SnipAdapter? = null
@@ -30,7 +34,8 @@ class BodyFragment : Fragment(), LifecycleOwner{
         photoRepository.allPhotos.observe(this) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist) }
+                adapterSnips = SnipAdapter(requireContext(), Datasource.getInstance().datalist, this)
+                //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
                 binding.snipDisplay.adapter = adapterSnips
@@ -62,5 +67,21 @@ class BodyFragment : Fragment(), LifecycleOwner{
         super.onViewCreated(view, savedInstanceState)
         binding.pbSpinner.visibility = View.VISIBLE
     }
+
+    override fun onSnipClicked(snip: Photos) {
+
+
+        Log.d("onClick", snip.owner)
+
+        SnipViewFragment(snip, requireContext()).show(
+            childFragmentManager, SnipViewFragment.TAG)
+
+    }
+
+    override fun onSnipLongClicked(snip: Photos) {
+        Log.d("onLongClick", snip.owner)
+
+    }
+
 
 }
