@@ -19,4 +19,33 @@
         android:name="com.example.projectSnips.fragments.SnipFragment"
         android:label="fragment_snip"
         tools:layout="@layout/fragment_snip" />
+    <fragment
+        android:id="@+id/snipSelectFragment"
+        android:name="com.example.projectSnips.fragments.snipSelectFragment"
+        android:label="fragment_snip_select"
+        tools:layout="@layout/fragment_snip_select" >
+        <action
+            android:id="@+id/action_snipSelectFragment_to_snipFragment"
+            app:destination="@id/snipFragment" />
+        <action
+            android:id="@+id/action_snipSelectFragment_to_storageFragment"
+            app:destination="@id/storageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/storageFragment"
+        android:name="com.example.projectSnips.fragments.StorageFragment"
+        android:label="fragment_storage"
+        tools:layout="@layout/fragment_storage" >
+        <action
+            android:id="@+id/action_storageFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_storageFragment_to_bodyFragment"
+            app:destination="@id/bodyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.projectSnips.fragments.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" />
 </navigation>

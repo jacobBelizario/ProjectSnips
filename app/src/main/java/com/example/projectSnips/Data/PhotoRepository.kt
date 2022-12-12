@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class PhotoRepository(val context: Context) :ViewModel() {
@@ -47,6 +46,27 @@ class PhotoRepository(val context: Context) :ViewModel() {
             }.addOnFailureListener{ exception ->
                 Log.w("ERROR", "Error getting documents: ", exception)
             }
+    }
+
+    fun addPhotoToDb(newPhotos: Photos) {
+        try {
+            val data: MutableMap<String, Any> = HashMap()
+
+            data["caption"] = newPhotos.caption;
+            data["url"] = newPhotos.url;
+            data["email"] = newPhotos.email;
+            data["visibility"] = newPhotos.visibility;
+
+            db.collection(COLLECTION_NAME).add(data).addOnSuccessListener { docRef ->
+
+            }.addOnFailureListener {
+                Log.e("TAG", "addPhotoToDB: ${it}")
+            }
+
+        } catch (ex: Exception) {
+            Log.e("TAG", "addPhotoToDB: ${ex.toString()}")
+        }
+
     }
 
 }

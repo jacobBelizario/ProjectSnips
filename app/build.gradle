@@ -102,8 +102,8 @@ dependencies {
     // CameraX View class
     implementation "androidx.camera:camera-view:1.1.0"
 
-
-
+    //editing library
+    implementation 'com.burhanrashid52:photoeditor:2.0.0'
 
 
 }
