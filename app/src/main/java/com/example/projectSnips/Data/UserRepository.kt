@@ -30,10 +30,19 @@ class UserRepository (private val context: Context) {
         //db.collection(COLLECTION_NAME).document(Datasource.getInstance().loggedInUser).collection(FIELD_LIKED_SNIPS).add(Datasource.getInstance().likedPhotos)
 
         try {
+            var likedPhotoListFromDB: MutableList<LikedPhoto>
             db.collection(COLLECTION_NAME).document(Datasource.getInstance().loggedInUser).collection(FIELD_LIKED_SNIPS).get().addOnSuccessListener {
-                val likedPhotoListFromDB = it.toObjects(LikedPhoto::class.java)
+                likedPhotoListFromDB = it.toObjects(LikedPhoto::class.java)
+
+                for (index in it.documents.indices){
+                    Log.d("place: ", it.documents[index].data!!["likedPhoto"].toString())
+                    if (it.documents[index].data!!["likedPhoto"] == "DISLIKED"){
+                        likedPhotoListFromDB[index].likeType = LikeType.DISLIKED
+                    }
+                }
                 if (likedPhotoListFromDB != null){
                     for (likedPhoto in likedPhotoListFromDB){
+
                         if (Datasource.getInstance().likedPhotos.contains(likedPhoto)) { //still exists
                             Log.d(TAG, "STILL EXISTS")
                             if (Datasource.getInstance().likedPhotos[Datasource.getInstance().likedPhotos.indexOf(
@@ -121,6 +130,12 @@ class UserRepository (private val context: Context) {
         try {
             db.collection(COLLECTION_NAME).document(Datasource.getInstance().loggedInUser).collection(FIELD_LIKED_SNIPS).get().addOnSuccessListener {
                 val likedPhotoListFromDB = it.toObjects(LikedPhoto::class.java)
+                for (index in it.documents.indices){
+                    Log.d("place: ", it.documents[index].data!!["likedPhoto"].toString())
+                    if (it.documents[index].data!!["likedPhoto"] == "DISLIKED"){
+                        likedPhotoListFromDB[index].likeType = LikeType.DISLIKED
+                    }
+                }
                 if (likedPhotoListFromDB != null){
                     for (likedPhoto in likedPhotoListFromDB){
                         Datasource.getInstance().likedPhotos.add(LikedPhoto(likedPhoto.id, likedPhoto.likeType))
