@@ -18,7 +18,11 @@
         android:id="@+id/snipFragment"
         android:name="com.example.projectSnips.fragments.SnipFragment"
         android:label="fragment_snip"
-        tools:layout="@layout/fragment_snip" />
+        tools:layout="@layout/fragment_snip" >
+        <action
+            android:id="@+id/action_snipFragment_to_snipCompleteFragment"
+            app:destination="@id/snipCompleteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/snipSelectFragment"
         android:name="com.example.projectSnips.fragments.snipSelectFragment"
@@ -48,4 +52,13 @@
         android:name="com.example.projectSnips.fragments.EditFragment"
         android:label="fragment_edit"
         tools:layout="@layout/fragment_edit" />
+    <fragment
+        android:id="@+id/snipCompleteFragment"
+        android:name="com.example.projectSnips.fragments.SnipCompleteFragment"
+        android:label="fragment_snip_complete"
+        tools:layout="@layout/fragment_snip_complete" >
+        <action
+            android:id="@+id/action_snipCompleteFragment_to_bodyFragment"
+            app:destination="@id/bodyFragment" />
+    </fragment>
 </navigation>

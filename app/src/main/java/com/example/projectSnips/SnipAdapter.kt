@@ -1,12 +1,8 @@
 package com.example.projectSnips
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,8 +24,6 @@ class SnipAdapter(private val context: Context,
         ) {
 
             Log.d("bind", "here")
-
-                    binding.tvOwner.text = currentSnip.id
                     binding.tvCaption.text = currentSnip.caption
                     Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
 

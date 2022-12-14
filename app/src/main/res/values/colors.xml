@@ -11,4 +11,5 @@
     <color name="shaded">#979797</color>
     <color name="main">#ff5400</color>
     <color name="transparent">#00000000</color>
+    <color name="offWhite">#f7f7f7</color>
 </resources>

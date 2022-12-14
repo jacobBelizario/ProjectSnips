@@ -1,7 +1,6 @@
 package com.example.projectSnips.fragments
 
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,12 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
-import com.example.projectSnips.Data.UserRepository
 import com.example.projectSnips.OnSnipClickListener
-import com.example.projectSnips.R
 import com.example.projectSnips.SnipAdapter
 import com.example.projectSnips.databinding.FragmentBodyBinding
 
@@ -46,9 +42,6 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
             }
         }
     }
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

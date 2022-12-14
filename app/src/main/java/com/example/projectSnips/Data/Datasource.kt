@@ -15,10 +15,10 @@ class Datasource {
             }
         }
     }
-    var heading = "ALL SNIPS"
+    var heading = ""
     var datalist:ArrayList<Photos> = arrayListOf()
 
-
+    var imageURI = ""
     var loggedInUser:String = ""
     var likedPhotos: ArrayList<LikedPhoto> = arrayListOf()
     var likes = 0

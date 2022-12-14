@@ -1,7 +1,6 @@
 package com.example.projectSnips.fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -10,18 +9,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.projectSnips.Data.*
-import com.example.projectSnips.OnSnipClickListener
 import com.example.projectSnips.R
-import com.example.projectSnips.databinding.SnipItemBinding
 import com.example.projectSnips.databinding.SnipPopupBinding
 
 class SnipViewFragment(val snip: Photos, val context1: Context) : DialogFragment() {
@@ -30,7 +22,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context) : DialogFragment
 
         fun bind(snip: Photos) : View
         {
-            binding.titlePopout.text = "${ snip.email.split("@")[0] }'s ${snip.visibility} snip"
+            binding.titlePopout.text = "${ snip.email.split("@")[0] }'s snip"
             binding.captionPopout.text = snip.caption
             binding.likeCounter.text = snip.likes.toString()
             Log.d("bind", Datasource.getInstance().likedPhotos.toString())
