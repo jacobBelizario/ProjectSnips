@@ -4,7 +4,7 @@ import java.util.*
 
 
 data class Photos (
-    var id: String = UUID.randomUUID().toString(),
+    var id:String = "",
     var caption:String = "",
     var url:String = "",
     var owner:String = "",

@@ -6,5 +6,5 @@ data class User (
     var id: String = UUID.randomUUID().toString(),
     var email:String = "",
     var password:String = "",
-    var photoList: MutableList<Photos>
+    var photoList: MutableList<LikedPhoto>
     )

@@ -18,5 +18,8 @@ class Datasource {
     var heading = "ALL SNIPS"
     var datalist:ArrayList<Photos> = arrayListOf()
 
-   // var loggedInUser:User = User("","","", arrayListOf())
+
+    var loggedInUser:String = ""
+    var likedPhotos: ArrayList<LikedPhoto> = arrayListOf()
+    var likes = 0
 }

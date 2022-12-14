@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
+import com.example.projectSnips.Data.UserRepository
 import com.example.projectSnips.OnSnipClickListener
 import com.example.projectSnips.R
 import com.example.projectSnips.SnipAdapter
@@ -31,10 +32,13 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         photoRepository = PhotoRepository(this.requireContext())
         photoRepository.getAllSnips()
 
+        //UserRepository(requireContext()).updateLikesByOwner()
+
+
         photoRepository.allPhotos.observe(this) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), Datasource.getInstance().datalist, this)
+                adapterSnips = SnipAdapter(requireContext(), photoList, this)
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)

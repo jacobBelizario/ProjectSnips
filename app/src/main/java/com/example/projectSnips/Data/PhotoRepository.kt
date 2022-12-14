@@ -22,9 +22,10 @@ class PhotoRepository(val context: Context) :ViewModel() {
             .addOnSuccessListener { documents ->
             for(document in documents) {
                 var snip = document.toObject(Photos::class.java)
+                snip.id = document.id
                 Datasource.getInstance().datalist.add(snip)
-                allPhotos.postValue(Datasource.getInstance().datalist)
             }
+                allPhotos.postValue(Datasource.getInstance().datalist)
         }.addOnFailureListener{ exception ->
             Log.w("ERROR", "Error getting documents: ", exception)
         }
@@ -40,12 +41,33 @@ class PhotoRepository(val context: Context) :ViewModel() {
             .addOnSuccessListener { documents ->
                 for(document in documents) {
                     var snip = document.toObject(Photos::class.java)
+                    snip.id = document.id
+                    Log.d("personalSnip", snip.toString())
                     Datasource.getInstance().datalist.add(snip)
-                    allPhotos.postValue(Datasource.getInstance().datalist)
                 }
+                allPhotos.postValue(Datasource.getInstance().datalist)
             }.addOnFailureListener{ exception ->
                 Log.w("ERROR", "Error getting documents: ", exception)
             }
+    }
+
+    fun updateLikesInDB(photos: Photos){
+        var data: MutableMap<String, Any> = HashMap()
+
+        data["caption"] = photos.caption
+        data["url"] = photos.url
+        data["email"] = photos.email
+        data["likes"] = photos.likes
+        data["visibility"] = photos.visibility
+        data["owner"] = photos.owner
+
+        try {
+            db.collection(COLLECTION_NAME).document(photos.id).set(data)
+        }
+        catch (ex: Exception){
+            Log.e("TAG", "addLikes: $ex")
+        }
+
     }
 
     fun addPhotoToDb(newPhotos: Photos) {
@@ -55,7 +77,9 @@ class PhotoRepository(val context: Context) :ViewModel() {
             data["caption"] = newPhotos.caption;
             data["url"] = newPhotos.url;
             data["email"] = newPhotos.email;
+            data["likes"] = newPhotos.likes
             data["visibility"] = newPhotos.visibility;
+            data["owner"] = newPhotos.owner
 
             db.collection(COLLECTION_NAME).add(data).addOnSuccessListener { docRef ->
 

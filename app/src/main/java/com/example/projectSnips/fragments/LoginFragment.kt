@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.UserRepository
 import com.example.projectSnips.databinding.LoginScreenBinding
 import com.google.firebase.FirebaseApp
@@ -98,9 +99,12 @@ class LoginFragment : Fragment() {
                     sharedPrefs = this.requireActivity().getSharedPreferences("com_example_projectSnips",
                         AppCompatActivity.MODE_PRIVATE
                     )
-                 userRepository.searchUserWithEmail(email)
+
                     writeToPrefs("EMAIL",email)
                     writeToPrefs("PASSWORD",password)
+
+                    userRepository.searchUserWithEmail(email)
+                    //userRepository.pullLikedPhotos()
 
                     val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                     findNavController().navigate(action)

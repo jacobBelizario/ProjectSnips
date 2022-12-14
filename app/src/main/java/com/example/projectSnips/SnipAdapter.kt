@@ -15,7 +15,7 @@ import com.example.projectSnips.databinding.SnipItemBinding
 
 
 class SnipAdapter(private val context: Context,
-                  private val dataSet: ArrayList<Photos>,
+                  private val dataSet: List<Photos>,
                   private val clickListener: OnSnipClickListener
                   //private val dataSet: ArrayList<Int>
 ) : RecyclerView.Adapter<SnipAdapter.SnipViewHolder>() {
@@ -29,7 +29,7 @@ class SnipAdapter(private val context: Context,
 
             Log.d("bind", "here")
 
-                    binding.tvOwner.text = currentSnip.owner
+                    binding.tvOwner.text = currentSnip.id
                     binding.tvCaption.text = currentSnip.caption
                     Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
 
