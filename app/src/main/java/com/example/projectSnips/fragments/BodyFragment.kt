@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.OnSnipClickListener
@@ -27,6 +28,8 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         super.onResume()
         photoRepository = PhotoRepository(this.requireContext())
         photoRepository.getAllSnips()
+
+        Log.d("CURRENT USER", Datasource.getInstance().loggedInUser)
 
         //UserRepository(requireContext()).updateLikesByOwner()
 

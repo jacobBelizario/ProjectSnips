@@ -3,6 +3,7 @@ package com.example.projectSnips.fragments
 import android.app.ProgressDialog
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,7 +96,9 @@ class SnipCompleteFragment : Fragment() {
                         AppCompatActivity.MODE_PRIVATE
                     )
                     var email: String? = sharedPrefs.getString("KEY_LOGGEDIN_EMAIL","")
-                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility ="public"))
+                    var owner = Datasource.getInstance().loggedInUser
+                    Log.d("user uploading", owner)
+                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility ="public", owner = owner))
                     binding.etCaption.text = null
 
                     // show snackbar to confirm that it is uploaded

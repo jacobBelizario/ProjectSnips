@@ -93,11 +93,12 @@ class UserRepository (private val context: Context) {
                             Log.d(TAG, "ADD ENTRY")
                             db.collection(COLLECTION_NAME).document(Datasource.getInstance().loggedInUser).collection(FIELD_LIKED_SNIPS).add(mapOf("id" to likedPhoto.id, "likedPhoto" to likedPhoto.likeType))
                         }
-                    }
-                }
+
             }
         }
-        catch (ex:Exception){
+            }
+        }
+        catch (ex: Exception){
             Log.e(TAG, "updateLikes: $ex")
         }
     }

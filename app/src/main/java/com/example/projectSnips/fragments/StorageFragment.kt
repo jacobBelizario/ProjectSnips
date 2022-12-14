@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.FragmentStorageBinding
@@ -124,7 +125,7 @@ class StorageFragment : Fragment() {
                         AppCompatActivity.MODE_PRIVATE
                     )
                     var email: String? = sharedPrefs.getString("KEY_LOGGEDIN_EMAIL","")
-                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility ="public"))
+                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility ="public", owner = Datasource.getInstance().loggedInUser))
                     binding.etCaption.text = null
 
                     // show snackbar to confirm that it is uploaded
