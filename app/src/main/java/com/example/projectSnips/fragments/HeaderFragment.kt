@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.databinding.FragmentHeaderBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,12 +39,6 @@ class HeaderFragment : Fragment() {
         sharedPrefs = this.requireActivity().getSharedPreferences("com_example_projectSnips",
             AppCompatActivity.MODE_PRIVATE
         )
-//        if(sharedPrefs.contains("KEY_LOGGEDIN_EMAIL")){
-//            binding.etUsername.setText(sharedPrefs.getString("KEY_LOGGEDIN_EMAIL",""))
-//        }
-        binding.tvHeaderHeading.text = Datasource.getInstance().heading
-        binding.tvUser.text = sharedPrefs.getString("KEY_LOGGEDIN_EMAIL","")
-
 
     }
 
@@ -53,6 +46,8 @@ class HeaderFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 
 
 }

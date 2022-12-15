@@ -15,7 +15,6 @@ class Datasource {
             }
         }
     }
-    var heading = ""
     var datalist:ArrayList<Photos> = arrayListOf()
     var privateList:ArrayList<Photos> = arrayListOf()
     var publicList:ArrayList<Photos> = arrayListOf()
@@ -23,5 +22,13 @@ class Datasource {
     var imageURI = ""
     var loggedInUser:String = ""
     var likedPhotos: ArrayList<LikedPhoto> = arrayListOf()
-    var likes = 0
+
+    fun reset() {
+        this.datalist = arrayListOf()
+        this.privateList = arrayListOf()
+        this.publicList = arrayListOf()
+        this.imageURI = ""
+        this.loggedInUser = ""
+        this.likedPhotos = arrayListOf()
+    }
 }

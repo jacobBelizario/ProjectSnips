@@ -75,5 +75,22 @@
         <argument
             android:name="snipToEdit"
             app:argType="com.example.projectSnips.Data.Photos" />
+        <action
+            android:id="@+id/action_updateSnipFragment_to_bodyFragment"
+            app:destination="@id/bodyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.example.projectSnips.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment2_to_splashFragment3"
+            app:destination="@id/splashFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment3"
+        android:name="com.example.projectSnips.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" />
 </navigation>

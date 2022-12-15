@@ -1,36 +1,18 @@
 package com.example.projectSnips.fragments
 
-import android.app.Activity
-import android.app.ProgressDialog
-import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
-import com.example.projectSnips.R
-import com.example.projectSnips.databinding.FragmentEditBinding
 import com.example.projectSnips.databinding.FragmentStorageBinding
-
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
-import java.text.SimpleDateFormat
-import java.util.*
 
 class UpdateSnipFragment : StorageFragment()  {
     private var _binding: FragmentStorageBinding? = null
@@ -38,10 +20,6 @@ class UpdateSnipFragment : StorageFragment()  {
 
     lateinit var snip: Photos
 
-
-    //lateinit var imageUri: Uri
-    //lateinit var photoRepository: PhotoRepository
-    //lateinit var sharedPrefs : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +37,7 @@ class UpdateSnipFragment : StorageFragment()  {
 
         val args: UpdateSnipFragmentArgs by navArgs()
         snip = args.snipToEdit
+
         imageUri = snip.url.toUri()
 
 
@@ -67,14 +46,12 @@ class UpdateSnipFragment : StorageFragment()  {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //super.onViewCreated(view, savedInstanceState)
-        //viewGalery()
-
         Glide.with(this).load(imageUri).into(binding.ivSelectedImg)
 
         binding.etCaption.setText(snip.caption)
-        //switch from public to private
-
+        if(snip.visibility == "private") {
+            binding.swPrivate.isChecked = true
+        }
         photoRepository = PhotoRepository(this.requireContext())
 
         binding.btnSaveSnip.text = "Apply Changes"
@@ -99,16 +76,26 @@ class UpdateSnipFragment : StorageFragment()  {
     override fun saveToCloud() {
         if(binding.etCaption.text.isEmpty()){
             binding.etCaption.error = "Caption cannot be empty"
+
         } else {
+            snip.caption = binding.etCaption.text.toString()
+            if(binding.swPrivate.isChecked){
+                snip.visibility = "private"
+            }else {
+                snip.visibility = "public"
+            }
             upload()
         }
     }
 
     override fun upload(){
-        Toast.makeText(requireContext(), "UPDATING",Toast.LENGTH_SHORT)
+        Log.d("INSIDE_UPLOAD","$snip")
         snip.caption = binding.etCaption.text.toString()
         //snip.visibility = //binding.switch
         photoRepository.updateSnip(snip)
+        Snackbar.make(binding.flStorage, "Successfully edited ${snip.caption}", Snackbar.LENGTH_SHORT).show()
+        val action = UpdateSnipFragmentDirections.actionUpdateSnipFragmentToBodyFragment()
+        findNavController().navigate(action)
     }
 
 }

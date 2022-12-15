@@ -1,20 +1,18 @@
 package com.example.projectSnips.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.R
-import javax.sql.DataSource
 
 
 class SplashFragment : Fragment() {
