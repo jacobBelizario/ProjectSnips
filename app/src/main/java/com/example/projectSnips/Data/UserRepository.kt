@@ -83,7 +83,16 @@ class UserRepository (private val context: Context) {
                                         .collection(FIELD_LIKED_SNIPS)
                                         .document(docRef.documents[0].id)
                                         .delete()
-                        }
+
+                                        //DELETE FROM PHOTOS REFERENCE
+                                        try {
+                                            db.collection("photos").document(likedPhoto.id).collection("likers").document(Datasource.getInstance().loggedInUser).delete()
+                                        }
+                                        catch (ex:Exception){
+                                            Log.e("deletedFromPhotosLikers", ex.toString())
+                                        }
+                                }
+
 
                     }
 
@@ -92,6 +101,13 @@ class UserRepository (private val context: Context) {
                         if (!likedPhotoListFromDB.contains(likedPhoto)){
                             Log.d(TAG, "ADD ENTRY")
                             db.collection(COLLECTION_NAME).document(Datasource.getInstance().loggedInUser).collection(FIELD_LIKED_SNIPS).add(mapOf("id" to likedPhoto.id, "likedPhoto" to likedPhoto.likeType))
+                            //ADD TO PHOTOS REFERENCE
+                            try {
+                                db.collection("photos").document(likedPhoto.id).collection("likers").document(Datasource.getInstance().loggedInUser).set(mapOf("id" to Datasource.getInstance().loggedInUser))
+                            }
+                            catch (ex:Exception){
+                                Log.e("addedToPhotosLikers", ex.toString())
+                            }
                         }
 
             }
