@@ -17,6 +17,8 @@ class Datasource {
     }
     var heading = ""
     var datalist:ArrayList<Photos> = arrayListOf()
+    var privateList:ArrayList<Photos> = arrayListOf()
+    var publicList:ArrayList<Photos> = arrayListOf()
 
     var imageURI = ""
     var loggedInUser:String = ""

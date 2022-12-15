@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fl_snip_complete"
+    android:background="@color/background"
     tools:context=".fragments.SnipCompleteFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -25,7 +26,9 @@
             android:textSize="30sp"
             android:layout_marginTop="20dp"
             android:textAlignment="center"
-            android:text="Image" />
+            android:fontFamily="@font/bukhari"
+            android:textColor="@color/main"
+            android:text="IMAGE" />
 
         <ImageView
             android:id="@+id/iv_selected_img"
@@ -33,18 +36,25 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:background="@drawable/edit_border"
             />
 
         <EditText
             android:layout_marginTop="20dp"
             android:id="@+id/et_caption"
             android:layout_width="match_parent"
-            android:background="@drawable/edit_border"
+            android:background="@drawable/box_border"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:padding="30dp"
             android:hint="Enter caption"
+            android:layout_height="wrap_content"/>
+        <Switch
+            android:id="@+id/sw_private"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_margin="20dp"
+            android:textColor="@color/main"
+            android:text="Private"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btn_save_snip"

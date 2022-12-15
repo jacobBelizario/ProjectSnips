@@ -22,6 +22,16 @@ class SnipViewFragment(val snip: Photos, val context1: Context) : DialogFragment
 
         fun bind(snip: Photos) : View
         {
+            if(snip.visibility.equals("private")){
+                binding.titlePopout.text = "${ snip.email.split("@")[0] }'s snip"
+                binding.captionPopout.text = snip.caption
+                Glide.with(binding.root).load(snip.url).into(binding.snipPopup)
+                binding.likePopout.visibility = View.GONE
+                binding.dislikePopout.visibility = View.GONE
+                binding.likeCounter.visibility = View.GONE
+
+            }else{
+
             binding.titlePopout.text = "${ snip.email.split("@")[0] }'s snip"
             binding.captionPopout.text = snip.caption
             binding.likeCounter.text = snip.likes.toString()
@@ -83,9 +93,9 @@ class SnipViewFragment(val snip: Photos, val context1: Context) : DialogFragment
                }
                 Log.d("ONDISLIKE", Datasource.getInstance().likedPhotos.toString())
             }
-            Glide.with(binding.root).load(snip.url).into(binding.snipPopup)
-            Datasource.getInstance().datalist[Datasource.getInstance().datalist.indexOf(snip)].likes = snip.likes
-
+                Glide.with(binding.root).load(snip.url).into(binding.snipPopup)
+                Datasource.getInstance().datalist[Datasource.getInstance().datalist.indexOf(snip)].likes = snip.likes
+            }
             return binding.root
         }
     }

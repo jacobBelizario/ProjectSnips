@@ -125,7 +125,13 @@ class StorageFragment : Fragment() {
                         AppCompatActivity.MODE_PRIVATE
                     )
                     var email: String? = sharedPrefs.getString("KEY_LOGGEDIN_EMAIL","")
-                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility ="public", owner = Datasource.getInstance().loggedInUser))
+
+                    //check if switch is on or off
+                    var visibility = "public"
+                    if(binding.swPrivate.isChecked){
+                        visibility = "private"
+                    }
+                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility =visibility, owner = Datasource.getInstance().loggedInUser))
                     binding.etCaption.text = null
 
                     // show snackbar to confirm that it is uploaded

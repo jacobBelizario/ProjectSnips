@@ -11,7 +11,8 @@ class PhotoRepository(val context: Context) :ViewModel() {
     private val COLLECTION_NAME = "photos"
     private val db = Firebase.firestore
     var allPhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
-
+    var publicPhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
+    var privatePhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
     fun getAllSnips() {
         //clear datasource whenever u run this function
         Datasource.getInstance().datalist = arrayListOf()
@@ -31,25 +32,48 @@ class PhotoRepository(val context: Context) :ViewModel() {
         }
     }
 
-    fun getPersonalSnips(owner: String) {
+    fun getPersonalPublicSnips(owner: String) {
         //clear datasource whenever u run this function
-        Datasource.getInstance().datalist = arrayListOf()
+        Datasource.getInstance().publicList = arrayListOf()
         //
         db.collection(COLLECTION_NAME)
             .whereEqualTo("owner", owner)
+            .whereEqualTo("visibility", "public")
             .get()
             .addOnSuccessListener { documents ->
                 for(document in documents) {
                     var snip = document.toObject(Photos::class.java)
                     snip.id = document.id
                     Log.d("personalSnip", snip.toString())
-                    Datasource.getInstance().datalist.add(snip)
+                    Datasource.getInstance().publicList.add(snip)
                 }
-                allPhotos.postValue(Datasource.getInstance().datalist)
+                publicPhotos.postValue(Datasource.getInstance().publicList)
             }.addOnFailureListener{ exception ->
                 Log.w("ERROR", "Error getting documents: ", exception)
             }
     }
+
+    fun getPersonalPrivateSnips(owner: String) {
+        //clear datasource whenever u run this function
+        Datasource.getInstance().privateList = arrayListOf()
+        //
+        db.collection(COLLECTION_NAME)
+            .whereEqualTo("owner", owner)
+            .whereEqualTo("visibility", "private")
+            .get()
+            .addOnSuccessListener { documents ->
+                for(document in documents) {
+                    var snip = document.toObject(Photos::class.java)
+                    snip.id = document.id
+                    Log.d("personalSnip", snip.toString())
+                    Datasource.getInstance().privateList.add(snip)
+                }
+                privatePhotos.postValue(Datasource.getInstance().privateList)
+            }.addOnFailureListener{ exception ->
+                Log.w("ERROR", "Error getting documents: ", exception)
+            }
+    }
+
 
     fun updateLikesInDB(photos: Photos){
         var data: MutableMap<String, Any> = HashMap()

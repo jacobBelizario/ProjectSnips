@@ -31,6 +31,7 @@
             android:layout_width="110dp"
             android:layout_height="50dp"
             android:text="USER"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:textAlignment="center"
             android:maxLines="1"

@@ -16,6 +16,8 @@
         android:textAlignment="center"
         android:layout_height="wrap_content"
         android:textSize="50sp"
+        android:fontFamily="@font/bukhari"
+        android:textColor="@color/main"
         android:text="Upload"
         />
 

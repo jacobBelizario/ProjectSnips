@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
-import com.example.projectSnips.Data.UserRepository
 import com.example.projectSnips.OnSnipClickListener
-import com.example.projectSnips.R
 import com.example.projectSnips.SnipAdapter
-import com.example.projectSnips.databinding.FragmentBodyBinding
 import com.example.projectSnips.databinding.FragmentPersonalBinding
 
 class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
@@ -29,11 +26,10 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
     override fun onResume() {
         super.onResume()
         photoRepository = PhotoRepository(this.requireContext())
-        photoRepository.getPersonalSnips(Datasource.getInstance().loggedInUser)
+        photoRepository.getPersonalPublicSnips(Datasource.getInstance().loggedInUser)
+        photoRepository.getPersonalPrivateSnips(Datasource.getInstance().loggedInUser)
 
-        //UserRepository(requireContext()).updateLikesByOwner()
-
-        photoRepository.allPhotos.observe(this) { photoList ->
+        photoRepository.publicPhotos.observe(this) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
                 adapterSnips = SnipAdapter(requireContext(), photoList, this)
@@ -41,6 +37,17 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
                 binding.snipDisplay.adapter = adapterSnips
+            }
+        }
+
+        photoRepository.privatePhotos.observe(this) { photoList ->
+            if (photoList != null) {
+                binding.pbSpinner.visibility = View.GONE
+                adapterSnips = SnipAdapter(requireContext(), photoList, this)
+                //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
+                binding.snipDisplayPrivate.setHasFixedSize(true)
+                binding.snipDisplayPrivate.layoutManager = GridLayoutManager(activity, 3)
+                binding.snipDisplayPrivate.adapter = adapterSnips
             }
         }
     }
