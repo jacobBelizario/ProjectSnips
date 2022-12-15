@@ -97,8 +97,25 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
             .setMessage("What would you like to do with this snip?")
             .setPositiveButton("Edit") { dialogInterface, i ->
                 //UpdateSnipFragment(snip)
+                dialogInterface.dismiss()
                 findNavController().navigate(PersonalFragmentDirections.actionPersonalFragmentToUpdateSnipFragment(snip))
-            }.create().show()
+            }
+            .setNegativeButton("Delete") {dialogInterface, i ->
+                dialogInterface.dismiss()
+                AlertDialog.Builder(requireContext())
+                    .setMessage("Are you sure you want to delete this snip?")
+                    .setPositiveButton("Yes"){dialogInterface, i ->
+                        //delete snip
+                        photoRepository.deleteSnip(snip)
+                        onResume()
+                        dialogInterface.dismiss()
+                    }
+                    .setNegativeButton("Cancel") {dialogInterface, i ->
+                        dialogInterface.dismiss()
+                    }
+                    .create().show()
+            }
+            .create().show()
     }
 
 

@@ -13,6 +13,7 @@ class PhotoRepository(val context: Context) :ViewModel() {
     var allPhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
     var publicPhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
     var privatePhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
+
     fun getAllSnips() {
         //clear datasource whenever u run this function
         Datasource.getInstance().datalist = arrayListOf()
@@ -115,6 +116,41 @@ class PhotoRepository(val context: Context) :ViewModel() {
             Log.e("TAG", "addPhotoToDB: ${ex.toString()}")
         }
 
+    }
+
+    //it.toCollection() //interesting (might be useful)
+
+    fun deleteSnip(snip: Photos){
+        Log.d("deleteSnip", snip.id)
+        try {
+            //remove instances of likes from all users
+            db.collection(COLLECTION_NAME).document(snip.id).collection("likers").get().addOnSuccessListener { likers ->
+                //for each liker
+                likers.forEach { liker ->
+                    db.collection("users").document(liker.id).collection("liked_snips").get().addOnSuccessListener{ snips ->
+                        //check all liked snips in user
+                        snips.forEach { snipToBeRemoved ->
+                            if (snipToBeRemoved.get("id") == snip.id){
+                                //remove reference
+                                db.collection("users").document(liker.id).collection("liked_snips").document(snipToBeRemoved.id).delete()
+                                return@forEach
+                            }
+                        }
+                    }
+                }
+            }
+            //delete photo from database
+            db.collection(COLLECTION_NAME).document(snip.id).collection("likers")
+                .get().addOnSuccessListener {
+                it.documents.forEach {
+                    db.collection(COLLECTION_NAME).document(snip.id).collection("likers").document(it.id).delete()
+                }
+            }
+            db.collection(COLLECTION_NAME).document(snip.id).delete()
+        }
+        catch (ex: Exception){
+            Log.e("TAG", "deleteSnip: $ex")
+        }
     }
 
     fun updateSnip(snip: Photos){
