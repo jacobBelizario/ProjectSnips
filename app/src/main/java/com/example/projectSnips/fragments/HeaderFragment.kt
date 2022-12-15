@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.projectSnips.databinding.FragmentHeaderBinding
 
@@ -34,12 +33,9 @@ class HeaderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        //read from shared preferences to store default value of user when logged in
-        sharedPrefs = this.requireActivity().getSharedPreferences("com_example_projectSnips",
-            AppCompatActivity.MODE_PRIVATE
-        )
-
+        binding.ivAbout.setOnClickListener {
+            AboutFragment(requireContext()).show(childFragmentManager,AboutFragment.TAG)
+        }
     }
 
     override fun onDestroyView() {
