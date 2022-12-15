@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
@@ -33,24 +34,24 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         photoRepository.getPersonalPublicSnips(Datasource.getInstance().loggedInUser)
         photoRepository.getPersonalPrivateSnips(Datasource.getInstance().loggedInUser)
 
-        photoRepository.publicPhotos.observe(this) { photoList ->
+        photoRepository.publicPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
                 adapterSnips = SnipAdapter(requireContext(), photoList, this)
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
-                binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
+                binding.snipDisplay.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 binding.snipDisplay.adapter = adapterSnips
             }
         }
 
-        photoRepository.privatePhotos.observe(this) { photoList ->
+        photoRepository.privatePhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
                 adapterSnips = SnipAdapter(requireContext(), photoList, this)
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplayPrivate.setHasFixedSize(true)
-                binding.snipDisplayPrivate.layoutManager = GridLayoutManager(activity, 3)
+                binding.snipDisplayPrivate.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                 binding.snipDisplayPrivate.adapter = adapterSnips
             }
         }
@@ -86,13 +87,13 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         Log.d("onClick", snip.owner)
 
         if (snip.visibility == "private"){
-            photoRepository.privatePhotos.observe(this){
+            photoRepository.privatePhotos.observe(viewLifecycleOwner){
                 SnipViewFragment(snip, requireContext(), it).show(
                     childFragmentManager, SnipViewFragment.TAG)
             }
         }
         else{
-            photoRepository.publicPhotos.observe(this){
+            photoRepository.publicPhotos.observe(viewLifecycleOwner){
                 Log.d("???", it.toString())
                 SnipViewFragment(snip, requireContext(), it).show(
                     childFragmentManager, SnipViewFragment.TAG)

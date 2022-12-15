@@ -54,9 +54,8 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
 
             var startPos:Float = 0f
             var endPos:Float
+            //swipe code
             binding.root.setOnTouchListener { view, motionEvent ->
-                //startPos = motionEvent.rawX
-
                 if (motionEvent.action == MotionEvent.ACTION_DOWN){
                     Log.d("start", (startPos).toString())
                     startPos = motionEvent.rawX
@@ -66,6 +65,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
                     Log.d("end", (endPos).toString())
                     if (list.last() != snip){
                         binding.nextSnip.visibility = View.VISIBLE
+
                         if ((endPos-startPos) < -200) {
                             Log.d("swipe", (endPos-startPos).toString())
                             val newSnip = list[list.indexOf(snip)+1]
@@ -77,10 +77,12 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
                     }
                     else{
                         binding.nextSnip.visibility = View.INVISIBLE
+
                     }
 
                     if (list.first() != snip){
                         binding.lastSnip.visibility = View.VISIBLE
+
                         if ((endPos-startPos) > 200) {
                             val newSnip = list[list.indexOf(snip)-1]
                             binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
@@ -91,6 +93,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
                     }
                     else{
                         binding.lastSnip.visibility = View.INVISIBLE
+
                     }
                     startPos = 0f
                 }
@@ -126,15 +129,18 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
 
         fun actuallyBind(snip: Photos, list: List<Photos>){
 
-
+            //button code
             if (list.last() != snip){
                 binding.nextSnip.visibility = View.VISIBLE
-                binding.nextSnip.setOnClickListener {
-                    val newSnip = list[list.indexOf(snip)+1]
-                    binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
-                    binding.dislikePopout.setImageResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
-                    actuallyBind(newSnip, list)
-                }
+
+                //binding.nextSnip.setOnClickListener {
+                 //   val newSnip = list[list.indexOf(snip)+1]
+                 //   binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
+                //    binding.dislikePopout.setImageResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
+
+                    //actuallyBind(newSnip, list)
+
+               // }
             }
             else{
                 binding.nextSnip.visibility = View.INVISIBLE
@@ -142,12 +148,15 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
 
             if (list.first() != snip){
                 binding.lastSnip.visibility = View.VISIBLE
-                binding.lastSnip.setOnClickListener {
-                    val newSnip = list[list.indexOf(snip)-1]
-                    binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
-                    binding.dislikePopout.setImageResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
-                    actuallyBind(newSnip, list)
-                }
+
+                //binding.lastSnip.setOnClickListener {
+                    //val newSnip = list[list.indexOf(snip)-1]
+                    //binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
+                    //binding.dislikePopout.setImageResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
+
+                    //actuallyBind(newSnip, list)
+
+               // }
             }
             else{
                 binding.lastSnip.visibility = View.INVISIBLE

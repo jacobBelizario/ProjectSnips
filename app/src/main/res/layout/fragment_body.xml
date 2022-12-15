@@ -17,12 +17,12 @@
         android:layout_height="match_parent"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:text="All SNIPS"
+        android:layout_marginTop="25dp"
+        android:text="All Snips"
         android:fontFamily="@font/bukhari"
         android:textColor="@color/main"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="36sp"
         android:layout_height="wrap_content"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/update"

@@ -28,6 +28,7 @@
         app:layout_constraintEnd_toStartOf="@id/next_snip"
         />
     <ImageButton
+        android:clickable="false"
         android:id="@+id/last_snip"
         android:layout_width="50dp"
         android:layout_height="100dp"
@@ -37,6 +38,7 @@
         app:layout_constraintBottom_toBottomOf="@id/snip_popup"
         android:src="@drawable/ic_baseline_chevron_left_24"/>
     <ImageButton
+        android:clickable="false"
         android:id="@+id/next_snip"
         android:layout_width="50dp"
         android:layout_height="100dp"
