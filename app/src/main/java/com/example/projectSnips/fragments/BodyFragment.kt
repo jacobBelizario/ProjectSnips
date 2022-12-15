@@ -35,7 +35,7 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
         //UserRepository(requireContext()).updateLikesByOwner()
 
-        photoRepository.allPhotos.observe(this) { photoList ->
+        photoRepository.allPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
                 adapterSnips = SnipAdapter(requireContext(), photoList, this)
@@ -82,7 +82,7 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
         Log.d("onClick", snip.owner)
 
-        photoRepository.allPhotos.observe(this){
+        photoRepository.allPhotos.observe(viewLifecycleOwner){
             SnipViewFragment(snip, requireContext(), it).show(
                 childFragmentManager, SnipViewFragment.TAG)
         }
