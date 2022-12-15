@@ -25,6 +25,7 @@ class SnipAdapter(private val context: Context,
 
             Log.d("bind", "here")
                     binding.tvCaption.text = currentSnip.caption
+                    binding.tvEmail.text = currentSnip.email
                     Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
 
 

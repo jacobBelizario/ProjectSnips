@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -34,6 +33,9 @@ class PhotoRepository(val context: Context) :ViewModel() {
             Log.w("ERROR", "Error getting documents: ", exception)
         }
     }
+
+
+
 
     fun getPersonalPublicSnips(owner: String) {
         //clear datasource whenever u run this function

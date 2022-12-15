@@ -14,4 +14,9 @@
         <item name="android:fontFamily">@font/main</item>
         <!-- Customize your theme here. -->
     </style>
+    
+    <style name="snip_item_bg">
+        <item name="cornerSize">10%</item>
+
+    </style>
 </resources>

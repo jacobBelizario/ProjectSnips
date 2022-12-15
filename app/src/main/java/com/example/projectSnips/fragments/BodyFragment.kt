@@ -7,10 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
@@ -18,7 +17,6 @@ import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.OnSnipClickListener
 import com.example.projectSnips.SnipAdapter
 import com.example.projectSnips.databinding.FragmentBodyBinding
-import kotlinx.coroutines.launch
 
 class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
@@ -26,7 +24,7 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
     var adapterSnips: SnipAdapter? = null
     private var _binding: FragmentBodyBinding? = null
     private val binding get() = _binding!!
-
+    var sortItems = arrayListOf<String>("newest","oldest","popular","least liked")
 
     override fun onResume() {
         super.onResume()
@@ -34,14 +32,10 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         photoRepository.getAllSnips()
 
         Log.d("CURRENT USER", Datasource.getInstance().loggedInUser)
-
-        //UserRepository(requireContext()).updateLikesByOwner()
-
         photoRepository.allPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
                 adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this)
-                //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
                 binding.snipDisplay.adapter = adapterSnips
@@ -69,12 +63,17 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
         super.onViewCreated(view, savedInstanceState)
         binding.pbSpinner.visibility = View.VISIBLE
-
+        //load spinner values
+        var spinnerAdapter = ArrayAdapter(requireContext().applicationContext,android.R.layout.simple_spinner_item,sortItems)
+        binding.spinSort.adapter = spinnerAdapter
         binding.update.setOnRefreshListener {
             Log.d("REFRESHING", binding.update.isRefreshing.toString())
             binding.update.isRefreshing = false
             onResume()
         }
+
+
+
 
 
     }

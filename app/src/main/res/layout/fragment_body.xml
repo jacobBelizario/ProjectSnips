@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
     android:background="@color/offWhite"
+    android:layout_gravity="center_horizontal"
     tools:context=".fragments.BodyFragment"
     android:orientation="vertical"
     android:id="@+id/fl_body"
@@ -24,11 +24,17 @@
         android:textAlignment="center"
         android:textSize="36sp"
         android:layout_height="wrap_content"/>
+    <Spinner
+        android:id="@+id/spin_sort"
+        android:layout_width="150dp"
+        android:layout_gravity="end"
+        android:layout_marginRight="10dp"
+        android:layout_height="50dp"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/snip_display"
             android:layout_margin="10dp"
