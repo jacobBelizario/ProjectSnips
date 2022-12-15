@@ -82,8 +82,12 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
         Log.d("onClick", snip.owner)
 
-        SnipViewFragment(snip, requireContext()).show(
-            childFragmentManager, SnipViewFragment.TAG)
+        photoRepository.allPhotos.observe(this){
+            SnipViewFragment(snip, requireContext(), it).show(
+                childFragmentManager, SnipViewFragment.TAG)
+        }
+
+
 
     }
 

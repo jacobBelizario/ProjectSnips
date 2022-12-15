@@ -85,9 +85,19 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
 
         Log.d("onClick", snip.owner)
 
-        SnipViewFragment(snip, requireContext()).show(
-            childFragmentManager, SnipViewFragment.TAG)
-
+        if (snip.visibility == "private"){
+            photoRepository.privatePhotos.observe(this){
+                SnipViewFragment(snip, requireContext(), it).show(
+                    childFragmentManager, SnipViewFragment.TAG)
+            }
+        }
+        else{
+            photoRepository.publicPhotos.observe(this){
+                Log.d("???", it.toString())
+                SnipViewFragment(snip, requireContext(), it).show(
+                    childFragmentManager, SnipViewFragment.TAG)
+            }
+        }
     }
 
     override fun onSnipLongClicked(snip: Photos) {
