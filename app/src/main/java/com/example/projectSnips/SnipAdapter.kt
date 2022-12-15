@@ -36,6 +36,12 @@ class SnipAdapter(private val context: Context,
 
             }
 
+            itemView.setOnLongClickListener {
+                print("LONG")
+                clickListener.onSnipLongClicked(currentSnip)
+                true
+            }
+
            // itemView.setOnLongClickListener {
                 //
            // }

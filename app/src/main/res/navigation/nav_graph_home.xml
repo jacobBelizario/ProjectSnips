@@ -13,7 +13,11 @@
         android:id="@+id/personalFragment"
         android:name="com.example.projectSnips.fragments.PersonalFragment"
         android:label="fragment_personal"
-        tools:layout="@layout/fragment_personal" />
+        tools:layout="@layout/fragment_personal" >
+        <action
+            android:id="@+id/action_personalFragment_to_updateSnipFragment"
+            app:destination="@id/updateSnipFragment" />
+    </fragment>
     <fragment
         android:id="@+id/snipFragment"
         android:name="com.example.projectSnips.fragments.SnipFragment"
@@ -60,5 +64,16 @@
         <action
             android:id="@+id/action_snipCompleteFragment_to_bodyFragment"
             app:destination="@id/bodyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateSnipFragment"
+        android:name="com.example.projectSnips.fragments.UpdateSnipFragment"
+        android:label="UpdateSnipFragment" >
+        <action
+            android:id="@+id/action_updateSnipFragment_to_personalFragment"
+            app:destination="@id/personalFragment" />
+        <argument
+            android:name="snipToEdit"
+            app:argType="com.example.projectSnips.Data.Photos" />
     </fragment>
 </navigation>

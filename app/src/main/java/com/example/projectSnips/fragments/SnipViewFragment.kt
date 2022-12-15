@@ -98,6 +98,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context) : DialogFragment
             }
             return binding.root
         }
+
     }
 
     @SuppressLint("DialogFragmentCallbacksDetector")

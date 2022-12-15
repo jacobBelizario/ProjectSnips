@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class StorageFragment : Fragment() {
+open class StorageFragment : Fragment() {
     private var _binding: FragmentStorageBinding? = null
     private val binding get() = _binding!!
     private val pickImage = 100
@@ -91,7 +91,7 @@ class StorageFragment : Fragment() {
         startActivityForResult(gallery, pickImage)
     }
 
-    fun saveToCloud() {
+    open fun saveToCloud() {
         if(binding.etCaption.text.isEmpty()){
             binding.etCaption.error = "Caption cannot be empty"
         } else {
@@ -99,7 +99,7 @@ class StorageFragment : Fragment() {
         }
     }
 
-    fun upload(){
+    open fun upload(){
         val progressDialog = ProgressDialog(this.requireActivity())
         progressDialog.setMessage("UPLOADING...")
         progressDialog.setCancelable(false)

@@ -117,4 +117,21 @@ class PhotoRepository(val context: Context) :ViewModel() {
 
     }
 
+    fun updateSnip(snip: Photos){
+        val data: MutableMap<String, Any> = HashMap()
+        data["caption"] = snip.caption;
+        data["url"] = snip.url;
+        data["email"] = snip.email;
+        data["likes"] = snip.likes
+        data["visibility"] = snip.visibility;
+        data["owner"] = snip.owner
+
+        try {
+            db.collection(COLLECTION_NAME).document(snip.id).set(data)
+        }
+        catch (ex: Exception){
+            Log.e("TAG", "updateSnip: $ex")
+        }
+    }
+
 }
