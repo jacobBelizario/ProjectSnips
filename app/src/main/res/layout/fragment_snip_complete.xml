@@ -64,13 +64,6 @@
             android:text="Save snip"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/btn_edit_snip"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="Edit snip"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </FrameLayout>
