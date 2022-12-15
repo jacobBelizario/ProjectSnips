@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class PhotoRepository(val context: Context) :ViewModel() {
     private val COLLECTION_NAME = "photos"
@@ -106,7 +108,7 @@ class PhotoRepository(val context: Context) :ViewModel() {
             data["visibility"] = newPhotos.visibility;
             data["owner"] = newPhotos.owner
 
-            db.collection(COLLECTION_NAME).add(data).addOnSuccessListener { docRef ->
+            db.collection(COLLECTION_NAME).document(newPhotos.id).set(data).addOnSuccessListener { docRef ->
 
             }.addOnFailureListener {
                 Log.e("TAG", "addPhotoToDB: ${it}")
@@ -147,6 +149,12 @@ class PhotoRepository(val context: Context) :ViewModel() {
                 }
             }
             db.collection(COLLECTION_NAME).document(snip.id).delete()
+            var storage = Firebase.storage
+            val storageRef = storage.reference
+            storageRef.child("/public/${snip.id}").delete().addOnSuccessListener {
+                Log.d("deleteSnip: ", "successfully deleted")
+            }
+
         }
         catch (ex: Exception){
             Log.e("TAG", "deleteSnip: $ex")

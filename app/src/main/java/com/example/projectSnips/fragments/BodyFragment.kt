@@ -38,7 +38,7 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         photoRepository.allPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList, this)
+                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this)
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
@@ -83,7 +83,7 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         Log.d("onClick", snip.owner)
 
         photoRepository.allPhotos.observe(viewLifecycleOwner){
-            SnipViewFragment(snip, requireContext(), it).show(
+            SnipViewFragment(snip, requireContext(), it.reversed()).show(
                 childFragmentManager, SnipViewFragment.TAG)
         }
 

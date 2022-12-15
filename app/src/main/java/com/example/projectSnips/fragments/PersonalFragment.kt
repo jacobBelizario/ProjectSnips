@@ -37,7 +37,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         photoRepository.publicPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList, this)
+                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this)
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -48,7 +48,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         photoRepository.privatePhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList, this)
+                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this)
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplayPrivate.setHasFixedSize(true)
                 binding.snipDisplayPrivate.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -88,14 +88,14 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
 
         if (snip.visibility == "private"){
             photoRepository.privatePhotos.observe(viewLifecycleOwner){
-                SnipViewFragment(snip, requireContext(), it).show(
+                SnipViewFragment(snip, requireContext(), it.reversed()).show(
                     childFragmentManager, SnipViewFragment.TAG)
             }
         }
         else{
             photoRepository.publicPhotos.observe(viewLifecycleOwner){
                 Log.d("???", it.toString())
-                SnipViewFragment(snip, requireContext(), it).show(
+                SnipViewFragment(snip, requireContext(), it.reversed()).show(
                     childFragmentManager, SnipViewFragment.TAG)
             }
         }

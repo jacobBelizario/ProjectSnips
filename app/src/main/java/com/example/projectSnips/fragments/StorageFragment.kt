@@ -23,7 +23,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import java.sql.Time
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneOffset
 import java.util.*
 
 
@@ -104,10 +108,10 @@ open class StorageFragment : Fragment() {
         progressDialog.setMessage("UPLOADING...")
         progressDialog.setCancelable(false)
         progressDialog.show()
-        val formatter = SimpleDateFormat("yyyy_MM_DD_HH_mm_ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("yyyyMMDDHHmmss", Locale.getDefault())
         val now = Date()
-        val imageName = binding.etCaption.text
-        var filename = "$imageName${formatter.format(now)}"
+        //val imageName = binding.etCaption.text
+        var filename = "${formatter.format(now)}"
         val storageReference = FirebaseStorage.getInstance().getReference("/public/$filename")
         storageReference.putFile(imageUri)
             .addOnSuccessListener {
@@ -131,7 +135,7 @@ open class StorageFragment : Fragment() {
                     if(binding.swPrivate.isChecked){
                         visibility = "private"
                     }
-                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility =visibility, owner = Datasource.getInstance().loggedInUser))
+                    photoRepository.addPhotoToDb(Photos(id = filename, caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility =visibility, owner = Datasource.getInstance().loggedInUser))
                     binding.etCaption.text = null
 
                     // show snackbar to confirm that it is uploaded
