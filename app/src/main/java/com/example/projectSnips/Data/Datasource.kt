@@ -21,6 +21,7 @@ class Datasource {
 
     var imageURI = ""
     var loggedInUser:String = ""
+    var email = ""
     var likedPhotos: ArrayList<LikedPhoto> = arrayListOf()
 
     fun reset() {
@@ -29,6 +30,7 @@ class Datasource {
         this.publicList = arrayListOf()
         this.imageURI = ""
         this.loggedInUser = ""
+        this.email = ""
         this.likedPhotos = arrayListOf()
     }
 }

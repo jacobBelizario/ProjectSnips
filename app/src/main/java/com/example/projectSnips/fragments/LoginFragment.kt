@@ -103,6 +103,7 @@ class LoginFragment : Fragment() {
                     writeToPrefs("EMAIL",email)
                     writeToPrefs("PASSWORD",password)
 
+                    Datasource.getInstance().email = email
                     userRepository.searchUserWithEmail(email)
                     //userRepository.pullLikedPhotos()
 

@@ -97,6 +97,25 @@ class PhotoRepository(val context: Context) :ViewModel() {
 
     }
 
+    fun addPrivatePhotoToDB(snip: Photos){
+        try {
+            val data: MutableMap<String, Any> = HashMap()
+
+            data["caption"] = snip.caption;
+            data["url"] = snip.url;
+            data["email"] = snip.email;
+            data["likes"] = snip.likes
+            data["visibility"] = snip.visibility;
+            data["owner"] = snip.owner
+
+            db.collection(COLLECTION_NAME).add(data).addOnSuccessListener { docRef ->
+
+            }
+        }
+        catch (ex:Exception){
+        }
+    }
+
     fun addPhotoToDb(newPhotos: Photos) {
         try {
             val data: MutableMap<String, Any> = HashMap()
@@ -121,6 +140,13 @@ class PhotoRepository(val context: Context) :ViewModel() {
     }
 
     //it.toCollection() //interesting (might be useful)
+
+    fun deletePrivateSnip(snip: Photos){
+        try {
+            db.collection(COLLECTION_NAME).document(snip.id).delete()
+        }catch (ex:Exception){
+        }
+    }
 
     fun deleteSnip(snip: Photos){
         Log.d("deleteSnip", snip.id)

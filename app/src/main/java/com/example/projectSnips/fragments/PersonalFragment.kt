@@ -104,29 +104,46 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
     override fun onSnipLongClicked(snip: Photos) {
         Log.d("onLongClick", snip.owner)
 
-        AlertDialog.Builder(requireContext())
-            .setMessage("What would you like to do with this snip?")
-            .setPositiveButton("Edit") { dialogInterface, i ->
-                //UpdateSnipFragment(snip)
-                dialogInterface.dismiss()
-                findNavController().navigate(PersonalFragmentDirections.actionPersonalFragmentToUpdateSnipFragment(snip))
-            }
-            .setNegativeButton("Delete") {dialogInterface, i ->
-                dialogInterface.dismiss()
-                AlertDialog.Builder(requireContext())
-                    .setMessage("Are you sure you want to delete this snip?")
-                    .setPositiveButton("Yes"){dialogInterface, i ->
-                        //delete snip
-                        photoRepository.deleteSnip(snip)
-                        onResume()
-                        dialogInterface.dismiss()
-                    }
-                    .setNegativeButton("Cancel") {dialogInterface, i ->
-                        dialogInterface.dismiss()
-                    }
-                    .create().show()
-            }
-            .create().show()
+        if (snip.email != Datasource.getInstance().email){
+            AlertDialog.Builder(requireContext())
+                .setMessage("Would you like to remove this snip?")
+                .setPositiveButton("Yes"){ dialogInterface, i ->
+                    photoRepository.deletePrivateSnip(snip)
+                    onResume()
+                }
+                .setNegativeButton("Cancel"){ dialogInterface, i ->
+
+                }
+                .create().show()
+        }
+
+        else{
+            AlertDialog.Builder(requireContext())
+                .setMessage("What would you like to do with this snip?")
+                .setPositiveButton("Edit") { dialogInterface, i ->
+                    //UpdateSnipFragment(snip)
+                    dialogInterface.dismiss()
+                    findNavController().navigate(PersonalFragmentDirections.actionPersonalFragmentToUpdateSnipFragment(snip))
+                }
+                .setNegativeButton("Delete") {dialogInterface, i ->
+                    dialogInterface.dismiss()
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("Are you sure you want to delete this snip?")
+                        .setPositiveButton("Yes"){dialogInterface, i ->
+                            //delete snip
+                            photoRepository.deleteSnip(snip)
+                            onResume()
+                            //dialogInterface.dismiss()
+                        }
+                        .setNegativeButton("Cancel") {dialogInterface, i ->
+                            //dialogInterface.dismiss()
+                        }
+                        .create().show()
+                }
+                .create().show()
+        }
+
+
     }
 
 

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.User
 import com.example.projectSnips.Data.UserRepository
 import com.example.projectSnips.databinding.SignupScreenBinding
@@ -99,6 +100,8 @@ class SignupFragment : Fragment() {
                     writeToPrefs("EMAIL",email)
                     writeToPrefs("PASSWORD",password)
 
+                    Datasource.getInstance().email = email
+
                     //get that user and store the data in the singleton
                     val action = SignupFragmentDirections.actionSignupFragmentToHomeFragment()
                     findNavController().navigate(action)
@@ -114,6 +117,7 @@ class SignupFragment : Fragment() {
 
     fun writeToPrefs(type:String,value:String){
         var keyName = "KEY_LOGGEDIN_${type}"
+
         with(sharedPrefs.edit()){
             putString(keyName, value)
             apply()
