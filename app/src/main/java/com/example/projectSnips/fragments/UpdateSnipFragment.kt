@@ -55,6 +55,7 @@ class UpdateSnipFragment : StorageFragment()  {
         photoRepository = PhotoRepository(this.requireContext())
 
         binding.btnSaveSnip.text = "Apply Changes"
+        binding.btnEditSnip.visibility = View.VISIBLE
         binding.btnEditSnip.text = "Back to My Snips"
 
         binding.btnEditSnip.setOnClickListener {

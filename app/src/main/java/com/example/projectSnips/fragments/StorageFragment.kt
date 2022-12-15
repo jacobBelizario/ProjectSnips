@@ -1,9 +1,12 @@
 package com.example.projectSnips.fragments
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,6 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projectSnips.Data.Datasource
@@ -38,7 +43,8 @@ open class StorageFragment : Fragment() {
     lateinit var imageUri: Uri
     lateinit var photoRepository: PhotoRepository
     lateinit var sharedPrefs : SharedPreferences
-
+    val REQUEST_CODE_PERMISSIONS = 123
+    val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,23 +63,22 @@ open class StorageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewGalery()
 
-        photoRepository = PhotoRepository(this.requireContext())
-        //get the output directory or storage of pictures
-        binding.ivSelectedImg.setOnClickListener {
+        if(allPermissionGranted()){
+
             viewGalery()
+            photoRepository = PhotoRepository(this.requireContext())
+            binding.ivSelectedImg.setOnClickListener {
+                viewGalery()
+            }
+            binding.btnSaveSnip.setOnClickListener {
+                saveToCloud()
+            }
+        }else {
+            ActivityCompat.requestPermissions(
+                this.requireActivity(),REQUIRED_PERMISSIONS,REQUEST_CODE_PERMISSIONS
+            )
         }
-
-        binding.btnEditSnip.setOnClickListener {
-            val action = StorageFragmentDirections.actionStorageFragmentToEditFragment()
-            findNavController().navigate(action)
-        }
-
-        binding.btnSaveSnip.setOnClickListener {
-            saveToCloud()
-        }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -82,6 +87,7 @@ open class StorageFragment : Fragment() {
             imageUri = data?.data!!
             Log.d("URI","$imageUri")
             binding.ivSelectedImg.setImageURI(imageUri)
+            binding.ivSelectedImg.setBackgroundColor(Color.parseColor("#171717"))
         }
     }
 
@@ -94,10 +100,38 @@ open class StorageFragment : Fragment() {
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         startActivityForResult(gallery, pickImage)
     }
+    fun allPermissionGranted() =
+        REQUIRED_PERMISSIONS.all {
+            ContextCompat.checkSelfPermission(
+                this.requireContext(),it
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == REQUEST_CODE_PERMISSIONS) {
+            if(allPermissionGranted()){
+                viewGalery()
+                Snackbar.make(binding.flStorage, "Permissions granted storage is now enabled", Snackbar.LENGTH_SHORT).show()
+            }else {
+                binding.ivSelectedImg.visibility = View.GONE
+                binding.btnSaveSnip.isEnabled = false
+                binding.btnSaveSnip.setOnClickListener {
+                    Snackbar.make(binding.flStorage, "Permissions not granted", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     open fun saveToCloud() {
         if(binding.etCaption.text.isEmpty()){
             binding.etCaption.error = "Caption cannot be empty"
+        }
+        if( binding.ivSelectedImg.drawable == null){
+            Snackbar.make(binding.flStorage, "Must select an image", Snackbar.LENGTH_SHORT).show()
         } else {
             upload()
         }
