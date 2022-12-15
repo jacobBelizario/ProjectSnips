@@ -47,33 +47,74 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
 
 
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(snip: Photos, list: List<Photos>) : View
+        fun bind(startSnip: Photos, list: List<Photos>) : View
         {
-
+            var snip = startSnip
             Log.d("ummmmmm", list.toString())
 
+            var startPos:Float = 0f
+            var endPos:Float
             binding.root.setOnTouchListener { view, motionEvent ->
-                val startPos = motionEvent.rawX
-                binding.root.autoDisposeScope.launch {
-                    delay(25)
-                    val endPos = motionEvent.rawX
-                    Log.d("swipe", "${endPos - startPos}")
-                    if ((endPos - startPos) > 0){ //swipe left (go next/ up in list)
-                        if (snip != Datasource.getInstance().datalist.last()){
-                            Log.d("swipe", "here")
+                //startPos = motionEvent.rawX
+
+                if (motionEvent.action == MotionEvent.ACTION_DOWN){
+                    Log.d("start", (startPos).toString())
+                    startPos = motionEvent.rawX
+                }
+                if (motionEvent.action == MotionEvent.ACTION_UP){
+                    endPos = motionEvent.rawX
+                    Log.d("end", (endPos).toString())
+                    if (list.last() != snip){
+                        binding.nextSnip.visibility = View.VISIBLE
+                        if ((endPos-startPos) > 200) {
+                            Log.d("swipe", (endPos-startPos).toString())
+                            val newSnip = list[list.indexOf(snip)+1]
+                            binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
+                            binding.dislikePopout.setImageResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
+                            actuallyBind(newSnip, list)
+                            snip = newSnip
+                        }
+                    }
+                    else{
+                        binding.nextSnip.visibility = View.INVISIBLE
+                    }
+
+                    if (list.first() != snip){
+                        binding.lastSnip.visibility = View.VISIBLE
+                        if ((endPos-startPos) < -200) {
+                            val newSnip = list[list.indexOf(snip)-1]
+                            binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
+                            binding.dislikePopout.setImageResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
+                            actuallyBind(newSnip, list)
+                            snip = newSnip
+                        }
+                    }
+                    else{
+                        binding.lastSnip.visibility = View.INVISIBLE
+                    }
+                    startPos = 0f
+                }
+                //val startPos = motionEvent.rawX
+                //binding.root.autoDisposeScope.launch {
+                    //delay(25)
+                    //val endPos = motionEvent.rawX
+                    //Log.d("swipe", "${endPos - startPos}")
+                    //if ((endPos - startPos) > 0){ //swipe left (go next/ up in list)
+                        //if (snip != Datasource.getInstance().datalist.last()){
+                           // Log.d("swipe", "here")
                             //swap bindings
-                            val newSnip = Datasource.getInstance().datalist[Datasource.getInstance().datalist.indexOf(snip)+1]
+                           // val newSnip = Datasource.getInstance().datalist[Datasource.getInstance().datalist.indexOf(snip)+1]
                             //Glide.with(binding.root).load(newSnip.url).into(binding.snipPopup)
                             //bind(newSnip)
                             //return@launch
-                        }
-                    }
-                    else if((endPos - startPos) < 0) //swipe right (go back/ down in list)
-                        if (snip != Datasource.getInstance().datalist.first()){
-                            Log.d("swipe", "here")
-                        }
-                    true
-                }
+                       // }
+                    //}
+                    //else if((endPos - startPos) < 0) //swipe right (go back/ down in list)
+                    //    if (snip != Datasource.getInstance().datalist.first()){
+                     //       Log.d("swipe", "here")
+                     //   }
+                   // true
+                //}
 
                 true
             }
