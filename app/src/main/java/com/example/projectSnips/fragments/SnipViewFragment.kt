@@ -66,7 +66,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
                     Log.d("end", (endPos).toString())
                     if (list.last() != snip){
                         binding.nextSnip.visibility = View.VISIBLE
-                        if ((endPos-startPos) > 200) {
+                        if ((endPos-startPos) < -200) {
                             Log.d("swipe", (endPos-startPos).toString())
                             val newSnip = list[list.indexOf(snip)+1]
                             binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
@@ -81,7 +81,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
 
                     if (list.first() != snip){
                         binding.lastSnip.visibility = View.VISIBLE
-                        if ((endPos-startPos) < -200) {
+                        if ((endPos-startPos) > 200) {
                             val newSnip = list[list.indexOf(snip)-1]
                             binding.likePopout.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
                             binding.dislikePopout.setImageResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
