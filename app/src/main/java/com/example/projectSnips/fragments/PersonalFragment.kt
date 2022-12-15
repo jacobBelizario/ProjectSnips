@@ -82,6 +82,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
     override fun onSnipLongClicked(snip: Photos) {
         Log.d("onLongClick", snip.owner)
 
+
     }
 
 

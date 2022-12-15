@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
@@ -15,6 +16,7 @@ import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.OnSnipClickListener
 import com.example.projectSnips.SnipAdapter
 import com.example.projectSnips.databinding.FragmentBodyBinding
+import kotlinx.coroutines.launch
 
 class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
@@ -32,7 +34,6 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         Log.d("CURRENT USER", Datasource.getInstance().loggedInUser)
 
         //UserRepository(requireContext()).updateLikesByOwner()
-
 
         photoRepository.allPhotos.observe(this) { photoList ->
             if (photoList != null) {
@@ -66,6 +67,14 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
         super.onViewCreated(view, savedInstanceState)
         binding.pbSpinner.visibility = View.VISIBLE
+
+        binding.update.setOnRefreshListener {
+            Log.d("REFRESHING", binding.update.isRefreshing.toString())
+            binding.update.isRefreshing = false
+            onResume()
+        }
+
+
     }
 
     override fun onSnipClicked(snip: Photos) {

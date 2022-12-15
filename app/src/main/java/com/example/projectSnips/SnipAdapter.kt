@@ -67,4 +67,6 @@ class SnipAdapter(private val context: Context,
         Log.d("onItemCount", "$dataSet")
         return dataSet.size
     }
+
+
 }
