@@ -1,12 +1,16 @@
 package com.example.projectSnips.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
@@ -82,7 +86,12 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
     override fun onSnipLongClicked(snip: Photos) {
         Log.d("onLongClick", snip.owner)
 
-
+        AlertDialog.Builder(requireContext())
+            .setMessage("What would you like to do with this snip?")
+            .setPositiveButton("Edit") { dialogInterface, i ->
+                //UpdateSnipFragment(snip)
+                findNavController().navigate(PersonalFragmentDirections.actionPersonalFragmentToUpdateSnipFragment(snip))
+            }.create().show()
     }
 
 

@@ -11,4 +11,4 @@ data class Photos (
     var likes:Int = 0,
     var email: String = "",
     var visibility: String = ""
-)
+) :java.io.Serializable
