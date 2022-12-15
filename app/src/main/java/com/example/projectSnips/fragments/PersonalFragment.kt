@@ -1,17 +1,14 @@
 package com.example.projectSnips.fragments
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
@@ -37,7 +34,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         photoRepository.publicPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this)
+                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this,"personal")
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -48,7 +45,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         photoRepository.privatePhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this)
+                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this,"personal")
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplayPrivate.setHasFixedSize(true)
                 binding.snipDisplayPrivate.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

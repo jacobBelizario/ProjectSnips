@@ -3,6 +3,7 @@ package com.example.projectSnips
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,7 +13,8 @@ import com.example.projectSnips.databinding.SnipItemBinding
 
 class SnipAdapter(private val context: Context,
                   private val dataSet: List<Photos>,
-                  private val clickListener: OnSnipClickListener
+                  private val clickListener: OnSnipClickListener,
+                  private val screenName:String
                   //private val dataSet: ArrayList<Int>
 ) : RecyclerView.Adapter<SnipAdapter.SnipViewHolder>() {
 
@@ -20,14 +22,19 @@ class SnipAdapter(private val context: Context,
 
         fun bind(
             currentSnip: Photos,
-            clickListener: OnSnipClickListener
+            clickListener: OnSnipClickListener,
+            screenName: String
         ) {
 
-            Log.d("bind", "here")
-                    binding.tvCaption.text = currentSnip.caption
-                    binding.tvEmail.text = currentSnip.email
-                    Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
-
+            if(screenName != "personal") {
+                binding.tvCaption.text = currentSnip.caption
+                binding.tvEmail.text = currentSnip.email
+                Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
+            }else {
+                binding.tvCaption.text = currentSnip.caption
+                binding.tvEmail.visibility = View.GONE
+                Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
+            }
 
 
             itemView.setOnClickListener {
@@ -66,7 +73,7 @@ class SnipAdapter(private val context: Context,
     //binds the data with view
     override fun onBindViewHolder(holder: SnipViewHolder, position: Int) {
         Log.d("onBindViewHolder", "here")
-        holder.bind(dataSet[position], clickListener)
+        holder.bind(dataSet[position], clickListener,screenName)
     }
 
     //identifies number of items
