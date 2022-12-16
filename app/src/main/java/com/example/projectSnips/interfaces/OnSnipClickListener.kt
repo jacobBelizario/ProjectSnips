@@ -1,4 +1,4 @@
-package com.example.projectSnips
+package com.example.projectSnips.interfaces
 
 import com.example.projectSnips.Data.Photos
 

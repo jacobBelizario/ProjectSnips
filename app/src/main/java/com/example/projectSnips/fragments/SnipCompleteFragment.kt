@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.projectSnips.Data.Datasource
-import com.example.projectSnips.Data.PhotoRepository
+import com.example.projectSnips.network.PhotoRepository
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.FragmentSnipCompleteBinding
 import com.google.firebase.ktx.Firebase

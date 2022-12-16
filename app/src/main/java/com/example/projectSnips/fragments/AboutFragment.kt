@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,11 +37,6 @@ class AboutFragment(val aboutContext: Context):DialogFragment() {
             }
             .create()
 
-
-
-    override fun onCancel(dialog: DialogInterface) {
-        super.onCancel(dialog)
-    }
     companion object {
         const val TAG = "AboutDialog"
     }

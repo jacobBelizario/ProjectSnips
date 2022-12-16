@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.User
-import com.example.projectSnips.Data.UserRepository
+import com.example.projectSnips.network.UserRepository
 import com.example.projectSnips.databinding.SignupScreenBinding
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth

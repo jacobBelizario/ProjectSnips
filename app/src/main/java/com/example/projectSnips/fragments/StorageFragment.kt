@@ -21,7 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projectSnips.Data.Datasource
-import com.example.projectSnips.Data.PhotoRepository
+import com.example.projectSnips.network.PhotoRepository
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.FragmentStorageBinding
 import com.google.android.material.snackbar.Snackbar

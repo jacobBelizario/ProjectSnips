@@ -13,12 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.projectSnips.Data.Datasource
-import com.example.projectSnips.Data.PhotoRepository
+import com.example.projectSnips.network.PhotoRepository
 import com.example.projectSnips.Data.Photos
-import com.example.projectSnips.OnSnipClickListener
-import com.example.projectSnips.SnipAdapter
+import com.example.projectSnips.interfaces.OnSnipClickListener
+import com.example.projectSnips.adapters.SnipAdapter
 import com.example.projectSnips.databinding.FragmentBodyBinding
-import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 
 class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
@@ -35,7 +34,6 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         photoRepository.allPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
                 var list = photoList
-                Log.d("onResume", binding.spinSort.selectedItem.toString()+"")
                 if (binding.spinSort.selectedItem!= null){
                     list = photoRepository.sortDataBySelection(photoList, binding.spinSort.selectedItem.toString())
                 }
@@ -76,7 +74,6 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
 
         binding.update.setOnRefreshListener {
-            Log.d("REFRESHING", binding.update.isRefreshing.toString())
             binding.update.isRefreshing = false
             onUpdate()
         }
@@ -91,20 +88,12 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
                 //never be unselected
             }
         }
-
-
-
-
     }
 
     override fun onSnipClicked(snip: Photos) {
 
-
-        Log.d("onClick", snip.owner)
-
         photoRepository.allPhotos.observe(viewLifecycleOwner){ photoList ->
             var list = photoList
-            Log.d("onResume", binding.spinSort.selectedItem.toString()+"")
             if (binding.spinSort.selectedItem!= null){
                 list = photoRepository.sortDataBySelection(list, binding.spinSort.selectedItem.toString())
             }
@@ -112,14 +101,9 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
             SnipViewFragment(snip, requireContext(), list).show(
                 childFragmentManager, SnipViewFragment.TAG)
         }
-
-
-
     }
 
     override fun onSnipLongClicked(snip: Photos) {
-        Log.d("onLongClick", snip.owner)
-
         if (snip.owner != Datasource.getInstance().loggedInUser){
             AlertDialog.Builder(requireContext())
                 .setMessage("Would you like to save this snip to My Snips?")
@@ -127,10 +111,9 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
                     snip.owner = Datasource.getInstance().loggedInUser
                     snip.visibility = "private"
                     photoRepository.addPrivatePhotoToDB(snip)
-
                 }
                 .setNegativeButton("Cancel") {dialogInterface, i ->
-
+                // do nothing
                 }
                 .create().show()
         }
@@ -138,11 +121,9 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
             AlertDialog.Builder(requireContext())
                 .setMessage("This is already one of your Snips")
                 .setPositiveButton("Ok") { dialogInterface, i ->
-
+                // do nothing
                 }.create().show()
         }
 
     }
-
-
 }

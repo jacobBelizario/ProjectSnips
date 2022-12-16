@@ -7,30 +7,17 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import android.view.GestureDetector
-import android.view.GestureDetector.OnGestureListener
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.view.GestureDetectorCompat
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.projectSnips.Data.*
 import com.example.projectSnips.R
 import com.example.projectSnips.databinding.SnipPopupBinding
-import com.github.satoshun.coroutine.autodispose.view.autoDisposeScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
-import java.sql.Time
-import java.time.Instant
-import java.time.LocalTime
+import com.example.projectSnips.network.PhotoRepository
+import com.example.projectSnips.network.UserRepository
 
 class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<Photos>) : DialogFragment()  {
 

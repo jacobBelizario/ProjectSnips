@@ -1,11 +1,12 @@
-package com.example.projectSnips.Data
+package com.example.projectSnips.network
 
 import android.content.Context
 import android.util.Log
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FieldPath
+import com.example.projectSnips.Data.Datasource
+import com.example.projectSnips.Data.LikeType
+import com.example.projectSnips.Data.LikedPhoto
+import com.example.projectSnips.Data.User
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class UserRepository (private val context: Context) {
@@ -86,7 +87,8 @@ class UserRepository (private val context: Context) {
 
                                         //DELETE FROM PHOTOS REFERENCE
                                         try {
-                                            db.collection("photos").document(likedPhoto.id).collection("likers").document(Datasource.getInstance().loggedInUser).delete()
+                                            db.collection("photos").document(likedPhoto.id).collection("likers").document(
+                                                Datasource.getInstance().loggedInUser).delete()
                                         }
                                         catch (ex:Exception){
                                             Log.e("deletedFromPhotosLikers", ex.toString())
@@ -103,15 +105,16 @@ class UserRepository (private val context: Context) {
                             db.collection(COLLECTION_NAME).document(Datasource.getInstance().loggedInUser).collection(FIELD_LIKED_SNIPS).add(mapOf("id" to likedPhoto.id, "likedPhoto" to likedPhoto.likeType))
                             //ADD TO PHOTOS REFERENCE
                             try {
-                                db.collection("photos").document(likedPhoto.id).collection("likers").document(Datasource.getInstance().loggedInUser).set(mapOf("id" to Datasource.getInstance().loggedInUser))
+                                db.collection("photos").document(likedPhoto.id).collection("likers").document(
+                                    Datasource.getInstance().loggedInUser).set(mapOf("id" to Datasource.getInstance().loggedInUser))
                             }
                             catch (ex:Exception){
                                 Log.e("addedToPhotosLikers", ex.toString())
                             }
                         }
 
-            }
-        }
+                    }
+                }
             }
         }
         catch (ex: Exception){
@@ -120,7 +123,6 @@ class UserRepository (private val context: Context) {
     }
 
     fun addUserToDB(newUser: User) {
-        var success = false
         try {
             val data: MutableMap<String, Any> = HashMap()
 
@@ -133,17 +135,16 @@ class UserRepository (private val context: Context) {
                 Log.d("addUserToDB", Datasource.getInstance().loggedInUser)
 
             }.addOnFailureListener {
-                Log.e(TAG, "addUserToDB: ${it}")
+                Log.e(TAG, "addUserToDB: $it")
             }
 
         } catch (ex: Exception) {
-            Log.e(TAG, "addUserToDB: ${ex.toString()}")
+            Log.e(TAG, "addUserToDB: $ex")
         }
 
     }
 
     fun pullLikedPhotos(){
-
         try {
             db.collection(COLLECTION_NAME).document(Datasource.getInstance().loggedInUser).collection(FIELD_LIKED_SNIPS).get().addOnSuccessListener {
                 val likedPhotoListFromDB = it.toObjects(LikedPhoto::class.java)
@@ -159,33 +160,27 @@ class UserRepository (private val context: Context) {
                     }
 
                 }
-                Log.d("pullPhotos", Datasource.getInstance().likedPhotos.toString())
             }
         }
         catch (ex:Exception){
-            Log.d("pullPhotos", ex.toString())
+            Log.e("pullPhotos", ex.toString())
         }
 
     }
 
 
     fun searchUserWithEmail(email : String){
-        var data: MutableMap<String, Any>
-
         try{
-
             db.collection(COLLECTION_NAME)
                 .whereEqualTo(FIELD_USER_EMAIL, email)
                 .get()
                 .addOnSuccessListener { docRef ->
                     Datasource.getInstance().loggedInUser = docRef.documents[0].id
-                    Log.d("searchUserWithEmail", Datasource.getInstance().loggedInUser)
                     pullLikedPhotos()
                 }
-
-
-        }catch(ex: Exception){
-            Log.e(TAG, "${ex}")
+        }
+        catch(ex: Exception){
+            Log.e(TAG, "$ex")
         }
     }
 }

@@ -10,7 +10,7 @@ import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.projectSnips.Data.PhotoRepository
+import com.example.projectSnips.network.PhotoRepository
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.FragmentStorageBinding
 import com.google.android.material.snackbar.Snackbar

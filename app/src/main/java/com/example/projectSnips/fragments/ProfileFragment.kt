@@ -66,7 +66,7 @@ class ProfileFragment : Fragment() {
         Datasource.getInstance().reset()
 //        val action = ProfileFragmentDirections.actionProfileFragment2ToSplashFragment3()
 //        findNavController().navigate(action)
-        val intent = Intent(this.requireContext(),MainActivity::class.java)
+        val intent = Intent(this.requireContext(), MainActivity::class.java)
         startActivity(intent)
     }
     fun clearData(){

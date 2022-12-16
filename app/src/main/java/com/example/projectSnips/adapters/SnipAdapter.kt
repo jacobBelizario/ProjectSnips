@@ -1,4 +1,4 @@
-package com.example.projectSnips
+package com.example.projectSnips.adapters
 
 import android.content.Context
 import android.util.Log
@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.SnipItemBinding
+import com.example.projectSnips.interfaces.OnSnipClickListener
 
 
 class SnipAdapter(private val context: Context,

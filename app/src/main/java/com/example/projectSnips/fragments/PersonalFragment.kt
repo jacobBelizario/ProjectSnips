@@ -14,10 +14,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectSnips.Data.Datasource
-import com.example.projectSnips.Data.PhotoRepository
+import com.example.projectSnips.network.PhotoRepository
 import com.example.projectSnips.Data.Photos
-import com.example.projectSnips.OnSnipClickListener
-import com.example.projectSnips.SnipAdapter
+import com.example.projectSnips.interfaces.OnSnipClickListener
+import com.example.projectSnips.adapters.SnipAdapter
 import com.example.projectSnips.databinding.FragmentPersonalBinding
 
 class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {

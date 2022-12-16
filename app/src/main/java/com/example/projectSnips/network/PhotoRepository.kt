@@ -1,9 +1,11 @@
-package com.example.projectSnips.Data
+package com.example.projectSnips.network
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.projectSnips.Data.Datasource
+import com.example.projectSnips.Data.Photos
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -33,14 +35,14 @@ class PhotoRepository(val context: Context) :ViewModel() {
                 sortedList = dataList.sortedBy { it.likes }
             }
         }
-        Log.d(sortType, sortedList.toString())
+
         return sortedList
     }
 
     fun getAllSnips() {
         //clear datasource whenever u run this function
         Datasource.getInstance().datalist = arrayListOf()
-        //
+
         db.collection(COLLECTION_NAME)
             .whereEqualTo("visibility", "public")
             .get()
@@ -62,7 +64,7 @@ class PhotoRepository(val context: Context) :ViewModel() {
     fun getPersonalPublicSnips(owner: String) {
         //clear datasource whenever u run this function
         Datasource.getInstance().publicList = arrayListOf()
-        //
+
         db.collection(COLLECTION_NAME)
             .whereEqualTo("owner", owner)
             .whereEqualTo("visibility", "public")
@@ -83,7 +85,7 @@ class PhotoRepository(val context: Context) :ViewModel() {
     fun getPersonalPrivateSnips(owner: String) {
         //clear datasource whenever u run this function
         Datasource.getInstance().privateList = arrayListOf()
-        //
+
         db.collection(COLLECTION_NAME)
             .whereEqualTo("owner", owner)
             .whereEqualTo("visibility", "private")
@@ -137,6 +139,7 @@ class PhotoRepository(val context: Context) :ViewModel() {
             }
         }
         catch (ex:Exception){
+            Log.e("TAG", "addPrivateLikes: $ex")
         }
     }
 
@@ -154,11 +157,11 @@ class PhotoRepository(val context: Context) :ViewModel() {
             db.collection(COLLECTION_NAME).document(newPhotos.id).set(data).addOnSuccessListener { docRef ->
 
             }.addOnFailureListener {
-                Log.e("TAG", "addPhotoToDB: ${it}")
+                Log.e("TAG", "addPhotoToDB: $it")
             }
 
         } catch (ex: Exception) {
-            Log.e("TAG", "addPhotoToDB: ${ex.toString()}")
+            Log.e("TAG", "addPhotoToDB: $ex")
         }
 
     }
@@ -168,12 +171,13 @@ class PhotoRepository(val context: Context) :ViewModel() {
     fun deletePrivateSnip(snip: Photos){
         try {
             db.collection(COLLECTION_NAME).document(snip.id).delete()
-        }catch (ex:Exception){
+        }
+        catch (ex:Exception){
+            Log.e("TAG", "deletePrivate: $ex")
         }
     }
 
     fun deleteSnip(snip: Photos){
-        Log.d("deleteSnip", snip.id)
         try {
             //remove instances of likes from all users
             db.collection(COLLECTION_NAME).document(snip.id).collection("likers").get().addOnSuccessListener { likers ->

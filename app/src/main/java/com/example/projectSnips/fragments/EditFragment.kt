@@ -13,6 +13,8 @@ import ja.burhanrashid52.photoeditor.PhotoEditorView
 //NOT USED
 //for editing snips like photoshop
 
+
+
 //PhotoEditorView mPhotoEditorView = findViewById(R.id.photoEditorView);
 //
 //mPhotoEditorView.getSource().setImageResource(R.drawable.got);
