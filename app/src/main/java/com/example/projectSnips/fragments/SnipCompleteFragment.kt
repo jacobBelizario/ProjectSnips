@@ -16,7 +16,6 @@ import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.PhotoRepository
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.FragmentSnipCompleteBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -102,9 +101,6 @@ class SnipCompleteFragment : Fragment() {
                     }
                     photoRepository.addPhotoToDb(Photos(id= filename,caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility =visibility, owner = Datasource.getInstance().loggedInUser))
                     binding.etCaption.text = null
-
-                    // show snackbar to confirm that it is uploaded
-                    Snackbar.make(binding.flSnipComplete, "Successfully uploaded $filename", Snackbar.LENGTH_SHORT).show()
                     val action = SnipCompleteFragmentDirections.actionSnipCompleteFragmentToBodyFragment()
                     findNavController().navigate(action)
                 }

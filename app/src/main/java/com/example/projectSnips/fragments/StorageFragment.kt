@@ -28,11 +28,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import java.sql.Time
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneOffset
 import java.util.*
 
 
@@ -66,7 +62,6 @@ open class StorageFragment : Fragment() {
 
         if(allPermissionGranted()){
 
-            viewGalery()
             photoRepository = PhotoRepository(this.requireContext())
             binding.ivSelectedImg.setOnClickListener {
                 viewGalery()
@@ -78,6 +73,13 @@ open class StorageFragment : Fragment() {
             ActivityCompat.requestPermissions(
                 this.requireActivity(),REQUIRED_PERMISSIONS,REQUEST_CODE_PERMISSIONS
             )
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.ivSelectedImg.setOnClickListener {
+            viewGalery()
         }
     }
 
@@ -144,27 +146,20 @@ open class StorageFragment : Fragment() {
         progressDialog.show()
         val formatter = SimpleDateFormat("yyyyMMDDHHmmss", Locale.getDefault())
         val now = Date()
-        //val imageName = binding.etCaption.text
         var filename = "${formatter.format(now)}"
         val storageReference = FirebaseStorage.getInstance().getReference("/public/$filename")
         storageReference.putFile(imageUri)
             .addOnSuccessListener {
                 binding.ivSelectedImg.setImageURI(null)
-//                binding.etCaption.text = null
                 if(progressDialog.isShowing) progressDialog.dismiss()
-                // now comes the fun part of getting the url from the upload and pushing to database
                 var storage = Firebase.storage
                 val storageRef = storage.reference
                 storageRef.child("/public/$filename").downloadUrl.addOnSuccessListener {
                     url ->
-                    //now we have the url we now can save to repository
-                    //create a new photo object we have everything we need
                     sharedPrefs = this.requireActivity().getSharedPreferences("com_example_projectSnips",
                         AppCompatActivity.MODE_PRIVATE
                     )
                     var email: String? = sharedPrefs.getString("KEY_LOGGEDIN_EMAIL","")
-
-                    //check if switch is on or off
                     var visibility = "public"
                     if(binding.swPrivate.isChecked){
                         visibility = "private"
@@ -172,8 +167,6 @@ open class StorageFragment : Fragment() {
                     photoRepository.addPhotoToDb(Photos(id = filename, caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility =visibility, owner = Datasource.getInstance().loggedInUser))
                     binding.etCaption.text = null
 
-                    // show snackbar to confirm that it is uploaded
-                    Snackbar.make(binding.flStorage, "Successfully uploaded $filename", Snackbar.LENGTH_SHORT).show()
                     val action = StorageFragmentDirections.actionStorageFragmentToBodyFragment()
                     findNavController().navigate(action)
                 }
