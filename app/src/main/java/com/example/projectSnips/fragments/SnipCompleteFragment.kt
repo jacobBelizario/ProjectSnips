@@ -74,10 +74,10 @@ class SnipCompleteFragment : Fragment() {
         progressDialog.setMessage("UPLOADING...")
         progressDialog.setCancelable(false)
         progressDialog.show()
-        val formatter = SimpleDateFormat("yyyy_MM_DD_HH_mm_ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("yyyyMMDDHHmmss", Locale.getDefault())
         val now = Date()
         val imageName = binding.etCaption.text
-        var filename = "$imageName${formatter.format(now)}"
+        var filename = "${formatter.format(now)}"
         val storageReference = FirebaseStorage.getInstance().getReference("/public/$filename")
         storageReference.putFile(imageUri)
             .addOnSuccessListener {
@@ -100,7 +100,7 @@ class SnipCompleteFragment : Fragment() {
                     if(binding.swPrivate.isChecked){
                         visibility = "private"
                     }
-                    photoRepository.addPhotoToDb(Photos(caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility =visibility, owner = Datasource.getInstance().loggedInUser))
+                    photoRepository.addPhotoToDb(Photos(id= filename,caption = binding.etCaption.text.toString(),url= url.toString(),email= email!!,visibility =visibility, owner = Datasource.getInstance().loggedInUser))
                     binding.etCaption.text = null
 
                     // show snackbar to confirm that it is uploaded

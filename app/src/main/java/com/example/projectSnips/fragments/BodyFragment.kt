@@ -71,6 +71,8 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         //load spinner values
         var spinnerAdapter = ArrayAdapter(requireContext().applicationContext,android.R.layout.simple_spinner_item,sortItems)
         binding.spinSort.adapter = spinnerAdapter
+
+
         binding.update.setOnRefreshListener {
             Log.d("REFRESHING", binding.update.isRefreshing.toString())
             binding.update.isRefreshing = false
