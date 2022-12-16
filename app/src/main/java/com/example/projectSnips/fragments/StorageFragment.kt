@@ -120,7 +120,6 @@ open class StorageFragment : Fragment() {
                 Snackbar.make(binding.flStorage, "Permissions granted storage is now enabled", Snackbar.LENGTH_SHORT).show()
             }else {
                 binding.ivSelectedImg.visibility = View.GONE
-                binding.btnSaveSnip.isEnabled = false
                 binding.btnSaveSnip.setOnClickListener {
                     Snackbar.make(binding.flStorage, "Permissions not granted", Snackbar.LENGTH_SHORT).show()
                 }
