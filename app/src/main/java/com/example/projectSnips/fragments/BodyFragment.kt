@@ -24,7 +24,7 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
     var adapterSnips: SnipAdapter? = null
     private var _binding: FragmentBodyBinding? = null
     private val binding get() = _binding!!
-    var sortItems = arrayListOf<String>("newest","oldest","popular","least liked")
+    val sortItems = arrayListOf("Newest","Oldest","Popular","Unpopular")
 
     override fun onResume() {
         super.onResume()
@@ -34,8 +34,13 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         Log.d("CURRENT USER", Datasource.getInstance().loggedInUser)
         photoRepository.allPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
+                var list = photoList
+                Log.d("onResume", binding.spinSort.selectedItem.toString()+"")
+                if (binding.spinSort.selectedItem!= null){
+                    list = photoRepository.sortDataBySelection(photoList, binding.spinSort.selectedItem.toString())
+                }
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this,"public")
+                adapterSnips = SnipAdapter(requireContext(), list, this,"public")
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = GridLayoutManager(activity, 3)
                 binding.snipDisplay.adapter = adapterSnips
@@ -83,8 +88,14 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
         Log.d("onClick", snip.owner)
 
-        photoRepository.allPhotos.observe(viewLifecycleOwner){
-            SnipViewFragment(snip, requireContext(), it.reversed()).show(
+        photoRepository.allPhotos.observe(viewLifecycleOwner){ photoList ->
+            var list = photoList
+            Log.d("onResume", binding.spinSort.selectedItem.toString()+"")
+            if (binding.spinSort.selectedItem!= null){
+                list = photoRepository.sortDataBySelection(list, binding.spinSort.selectedItem.toString())
+            }
+
+            SnipViewFragment(snip, requireContext(), list).show(
                 childFragmentManager, SnipViewFragment.TAG)
         }
 

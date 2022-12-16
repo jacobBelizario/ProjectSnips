@@ -15,6 +15,28 @@ class PhotoRepository(val context: Context) :ViewModel() {
     var publicPhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
     var privatePhotos : MutableLiveData<List<Photos>> = MutableLiveData<List<Photos>>()
 
+    fun sortDataBySelection(dataList: List<Photos>, sortType: String) : List<Photos>
+    {
+        var sortedList = listOf<Photos>()
+
+        when (sortType){
+            "Newest" -> {
+                sortedList = dataList.sortedBy { it.id }.reversed()
+            }
+            "Oldest" -> {
+                sortedList = dataList.sortedBy { it.id }
+            }
+            "Popular" -> {
+                sortedList = dataList.sortedBy { it.likes }.reversed()
+            }
+            "Unpopular" -> {
+                sortedList = dataList.sortedBy { it.likes }
+            }
+        }
+        Log.d(sortType, sortedList.toString())
+        return sortedList
+    }
+
     fun getAllSnips() {
         //clear datasource whenever u run this function
         Datasource.getInstance().datalist = arrayListOf()

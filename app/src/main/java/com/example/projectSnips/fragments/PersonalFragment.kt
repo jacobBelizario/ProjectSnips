@@ -1,11 +1,13 @@
 package com.example.projectSnips.fragments
 
+import android.R
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
@@ -23,6 +25,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
     var adapterSnips: SnipAdapter? = null
     private var _binding: FragmentPersonalBinding? = null
     private val binding get() = _binding!!
+    val sortItems = arrayListOf("Newest","Oldest","Popular","Unpopular")
 
 
     override fun onResume() {
@@ -33,8 +36,13 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
 
         photoRepository.publicPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
+                var list = photoList
+                //Log.d("onResume", binding.spinSortPublic.selectedItem.toString()+"")
+                if (binding.spinSortPublic.selectedItem!= null){
+                    list = photoRepository.sortDataBySelection(photoList, binding.spinSortPublic.selectedItem.toString())
+                }
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this,"personal")
+                adapterSnips = SnipAdapter(requireContext(), list, this,"personal")
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplay.setHasFixedSize(true)
                 binding.snipDisplay.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -44,8 +52,13 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
 
         photoRepository.privatePhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
+                var list = photoList
+                //Log.d("onResume", binding.spinSortPrivate.selectedItem.toString()+"")
+                if (binding.spinSortPrivate.selectedItem!= null){
+                    list = photoRepository.sortDataBySelection(photoList, binding.spinSortPrivate.selectedItem.toString())
+                }
                 binding.pbSpinner.visibility = View.GONE
-                adapterSnips = SnipAdapter(requireContext(), photoList.reversed(), this,"personal")
+                adapterSnips = SnipAdapter(requireContext(), list, this,"personal")
                 //adapterSnips = view?.let { SnipAdapter(it.context, Datasource.getInstance().datalist, ) }
                 binding.snipDisplayPrivate.setHasFixedSize(true)
                 binding.snipDisplayPrivate.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -77,6 +90,21 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
 
         super.onViewCreated(view, savedInstanceState)
         binding.pbSpinner.visibility = View.VISIBLE
+
+        //load spinner values
+        var spinnerAdapter = ArrayAdapter(requireContext().applicationContext,
+            R.layout.simple_spinner_item, sortItems)
+        binding.spinSortPublic.adapter = spinnerAdapter
+        binding.spinSortPrivate.adapter = spinnerAdapter
+
+        binding.refreshPrivate.setOnClickListener {
+            onResume()
+        }
+
+        binding.refreshPublic.setOnClickListener {
+            onResume()
+        }
+
     }
 
     override fun onSnipClicked(snip: Photos) {
@@ -84,15 +112,25 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         Log.d("onClick", snip.owner)
 
         if (snip.visibility == "private"){
-            photoRepository.privatePhotos.observe(viewLifecycleOwner){
-                SnipViewFragment(snip, requireContext(), it.reversed()).show(
+            photoRepository.privatePhotos.observe(viewLifecycleOwner){ photoList ->
+                var list = photoList
+                //Log.d("onResume", binding.spinSortPrivate.selectedItem.toString()+"")
+                if (binding.spinSortPrivate.selectedItem!= null){
+                    list = photoRepository.sortDataBySelection(photoList, binding.spinSortPrivate.selectedItem.toString())
+                }
+
+                SnipViewFragment(snip, requireContext(), list).show(
                     childFragmentManager, SnipViewFragment.TAG)
             }
         }
         else{
-            photoRepository.publicPhotos.observe(viewLifecycleOwner){
-                Log.d("???", it.toString())
-                SnipViewFragment(snip, requireContext(), it.reversed()).show(
+            photoRepository.publicPhotos.observe(viewLifecycleOwner){ photoList ->
+                var list = photoList
+                //Log.d("onResume", binding.spinSortPublic.selectedItem.toString()+"")
+                if (binding.spinSortPublic.selectedItem!= null){
+                    list = photoRepository.sortDataBySelection(photoList, binding.spinSortPublic.selectedItem.toString())
+                }
+                SnipViewFragment(snip, requireContext(), list).show(
                     childFragmentManager, SnipViewFragment.TAG)
             }
         }

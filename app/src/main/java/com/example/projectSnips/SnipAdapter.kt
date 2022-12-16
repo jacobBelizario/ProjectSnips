@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.projectSnips.Data.Datasource
 import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.databinding.SnipItemBinding
 
@@ -26,13 +27,13 @@ class SnipAdapter(private val context: Context,
             screenName: String
         ) {
 
-            if(screenName != "personal") {
+            if(currentSnip.email == Datasource.getInstance().email && screenName == "personal") {
                 binding.tvCaption.text = currentSnip.caption
-                binding.tvEmail.text = currentSnip.email
+                binding.tvEmail.visibility = View.GONE
                 Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
             }else {
                 binding.tvCaption.text = currentSnip.caption
-                binding.tvEmail.visibility = View.GONE
+                binding.tvEmail.text = currentSnip.email
                 Glide.with(binding.root).load(currentSnip.url).into(binding.ivSnip)
             }
 
