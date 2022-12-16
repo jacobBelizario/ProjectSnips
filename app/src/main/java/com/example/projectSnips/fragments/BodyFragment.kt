@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -17,6 +18,7 @@ import com.example.projectSnips.Data.Photos
 import com.example.projectSnips.OnSnipClickListener
 import com.example.projectSnips.SnipAdapter
 import com.example.projectSnips.databinding.FragmentBodyBinding
+import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 
 class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
 
@@ -26,9 +28,7 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
     private val binding get() = _binding!!
     val sortItems = arrayListOf("Newest","Oldest","Popular","Unpopular")
 
-    override fun onResume() {
-        super.onResume()
-        photoRepository = PhotoRepository(this.requireContext())
+    fun onUpdate() {
         photoRepository.getAllSnips()
 
         Log.d("CURRENT USER", Datasource.getInstance().loggedInUser)
@@ -56,6 +56,8 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         _binding = FragmentBodyBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        photoRepository = PhotoRepository(this.requireContext())
+
         return view
     }
 
@@ -76,9 +78,19 @@ class BodyFragment : Fragment(), OnSnipClickListener, LifecycleOwner{
         binding.update.setOnRefreshListener {
             Log.d("REFRESHING", binding.update.isRefreshing.toString())
             binding.update.isRefreshing = false
-            onResume()
+            onUpdate()
         }
 
+        binding.spinSort.onItemSelectedListener = object :
+        AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                onUpdate()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //never be unselected
+            }
+        }
 
 
 

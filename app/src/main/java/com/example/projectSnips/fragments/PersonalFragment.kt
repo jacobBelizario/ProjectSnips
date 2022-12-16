@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -27,12 +28,8 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
     private val binding get() = _binding!!
     val sortItems = arrayListOf("Newest","Oldest","Popular","Unpopular")
 
-
-    override fun onResume() {
-        super.onResume()
-        photoRepository = PhotoRepository(this.requireContext())
+    fun onUpdate(){
         photoRepository.getPersonalPublicSnips(Datasource.getInstance().loggedInUser)
-        photoRepository.getPersonalPrivateSnips(Datasource.getInstance().loggedInUser)
 
         photoRepository.publicPhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
@@ -49,6 +46,10 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
                 binding.snipDisplay.adapter = adapterSnips
             }
         }
+    }
+
+    fun onUpdatePrivate() {
+        photoRepository.getPersonalPrivateSnips(Datasource.getInstance().loggedInUser)
 
         photoRepository.privatePhotos.observe(viewLifecycleOwner) { photoList ->
             if (photoList != null) {
@@ -78,6 +79,8 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         _binding = FragmentPersonalBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        photoRepository = PhotoRepository(this.requireContext())
+
         return view
     }
 
@@ -97,12 +100,25 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
         binding.spinSortPublic.adapter = spinnerAdapter
         binding.spinSortPrivate.adapter = spinnerAdapter
 
-        binding.refreshPrivate.setOnClickListener {
-            onResume()
-        }
+        binding.spinSortPublic.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                onUpdate()
+            }
 
-        binding.refreshPublic.setOnClickListener {
-            onResume()
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //never be unselected
+            }
+        }
+        binding.spinSortPrivate.onItemSelectedListener  = object :
+            AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                onUpdatePrivate()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //never be unselected
+            }
         }
 
     }
@@ -144,7 +160,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
                 .setMessage("Would you like to remove this snip?")
                 .setPositiveButton("Yes"){ dialogInterface, i ->
                     photoRepository.deletePrivateSnip(snip)
-                    onResume()
+                    onUpdatePrivate()
                 }
                 .setNegativeButton("Cancel"){ dialogInterface, i ->
 
@@ -168,7 +184,7 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
                         .setPositiveButton("Yes"){dialogInterface, i ->
                             //delete snip
                             photoRepository.deleteSnip(snip)
-                            onResume()
+                            onUpdate()
                             //dialogInterface.dismiss()
                         }
                         .setNegativeButton("Cancel") {dialogInterface, i ->
@@ -181,6 +197,4 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
 
 
     }
-
-
 }

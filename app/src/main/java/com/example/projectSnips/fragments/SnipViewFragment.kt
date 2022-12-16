@@ -52,7 +52,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
             var snip = startSnip
             Log.d("ummmmmm", list.toString())
 
-            var startPos:Float = 0f
+            var startPos = 0f
             var endPos:Float
             //swipe code
             binding.root.setOnTouchListener { view, motionEvent ->
