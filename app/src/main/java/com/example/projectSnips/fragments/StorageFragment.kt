@@ -41,11 +41,6 @@ open class StorageFragment : Fragment() {
     lateinit var sharedPrefs : SharedPreferences
     val REQUEST_CODE_PERMISSIONS = 123
     val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,17 +64,14 @@ open class StorageFragment : Fragment() {
             binding.btnSaveSnip.setOnClickListener {
                 saveToCloud()
             }
+
+            binding.ivSelectedImg.setOnClickListener {
+                viewGalery()
+            }
         }else {
             ActivityCompat.requestPermissions(
                 this.requireActivity(),REQUIRED_PERMISSIONS,REQUEST_CODE_PERMISSIONS
             )
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.ivSelectedImg.setOnClickListener {
-            viewGalery()
         }
     }
 

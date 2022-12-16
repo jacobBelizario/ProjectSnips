@@ -1,5 +1,6 @@
 package com.example.projectSnips.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,12 +22,6 @@ class UpdateSnipFragment : StorageFragment()  {
     lateinit var snip: Photos
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,13 +41,17 @@ class UpdateSnipFragment : StorageFragment()  {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        photoRepository = PhotoRepository(this.requireContext())
+
+        //binding.
+
+        binding.ivSelectedImg.setBackgroundColor(Color.parseColor("#171717"))
         Glide.with(this).load(imageUri).into(binding.ivSelectedImg)
 
         binding.etCaption.setText(snip.caption)
         if(snip.visibility == "private") {
             binding.swPrivate.isChecked = true
         }
-        photoRepository = PhotoRepository(this.requireContext())
 
         binding.btnSaveSnip.text = "Apply Changes"
         binding.btnEditSnip.visibility = View.VISIBLE

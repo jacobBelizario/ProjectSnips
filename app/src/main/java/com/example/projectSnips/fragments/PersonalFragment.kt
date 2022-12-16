@@ -157,8 +157,9 @@ class PersonalFragment : Fragment(), OnSnipClickListener, LifecycleOwner {
                 .setMessage("What would you like to do with this snip?")
                 .setPositiveButton("Edit") { dialogInterface, i ->
                     //UpdateSnipFragment(snip)
-                    dialogInterface.dismiss()
+
                     findNavController().navigate(PersonalFragmentDirections.actionPersonalFragmentToUpdateSnipFragment(snip))
+                    dialogInterface.dismiss()
                 }
                 .setNegativeButton("Delete") {dialogInterface, i ->
                     dialogInterface.dismiss()

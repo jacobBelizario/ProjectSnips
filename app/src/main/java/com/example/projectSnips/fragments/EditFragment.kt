@@ -10,17 +10,15 @@ import ja.burhanrashid52.photoeditor.PhotoEditor
 import ja.burhanrashid52.photoeditor.PhotoEditorView
 
 
+//NOT USED
+//for editing snips like photoshop
+
 //PhotoEditorView mPhotoEditorView = findViewById(R.id.photoEditorView);
 //
 //mPhotoEditorView.getSource().setImageResource(R.drawable.got);
 class EditFragment : Fragment() {
     private var _binding: FragmentEditBinding? = null
     private val binding get() = _binding!!
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

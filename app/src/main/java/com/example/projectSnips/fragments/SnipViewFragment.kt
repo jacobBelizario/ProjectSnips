@@ -254,6 +254,7 @@ class SnipViewFragment(val snip: Photos, val context1: Context, val list: List<P
     override fun onCancel(dialog: DialogInterface) {
         UserRepository(requireContext()).updateLikesByOwner()
         PhotoRepository(requireContext()).updateLikesInDB(snip)
+        onResume()
         super.onCancel(dialog)
     }
 

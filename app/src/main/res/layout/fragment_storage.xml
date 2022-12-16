@@ -7,8 +7,6 @@
     android:id="@+id/fl_storage"
     tools:context=".fragments.StorageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ProgressBar
         android:id="@+id/pb_spinner"
         android:layout_width="match_parent"
